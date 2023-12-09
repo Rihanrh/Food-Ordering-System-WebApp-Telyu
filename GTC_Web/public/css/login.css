@@ -1,0 +1,121 @@
+/*Import poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+/* Apply a linear gradient background */
+body {
+    background: linear-gradient(172deg, #D3242B 6.28%, #F1474D 42.26%, #F24F55 60.55%, #F67579 79.75%, #FFF 106.15%);
+    margin: 0; 
+    font-family: Poppins;
+}
+
+/* Center the login container on the page and style it */
+.container-login {
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    box-sizing: border-box;
+    float: left;
+    position: relative;
+}
+
+.image-container {
+    width: 50%;
+    height: 100vh;
+    float: right;
+    position: relative;
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.img-fluid {
+    width: 70%; 
+    height: auto; 
+}
+
+/* Add the text above the image */
+.above-image-text {
+    text-align: center;
+    color: rgba(251, 251, 253, 0.97);
+    font-family: Poppins;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 54.875px;
+    letter-spacing: 2.4px;
+
+}
+.sub-heading {
+    font-size: 40px;
+    line-height: 54.875px;
+    letter-spacing: 2.4px;
+    text-align: center;
+}
+
+/* Style the input boxes for username/email and password */
+.form-control-lg {  
+    width: 90%; 
+    height: 90;
+    border: none;
+    background-color: #F7F7F7;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-left: 5%;
+}
+
+
+/* Style the login button */
+
+.login-button, .anchor-button {
+    width: 90%; 
+    height: 90px;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    background: #D3242B;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 5%;
+    text-align: center; 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+
+/* Hover effect for the login button */
+.login-button:hover {
+    background: #F1474D;
+}
+
+.label {
+    margin-left: 5%;
+}
+
+.heading-text{
+    text-align: left;
+}
+
+/* Style the password input container */
+.password-input {
+    position: relative; 
+    margin-right: 5px; 
+    padding-right: 30px; 
+}
+
+/* Style the password toggle icon */
+.password-toggle {
+    position: absolute;
+    top: 50%; 
+    right: 5px; 
+    transform: translateY(-50%); 
+    cursor: pointer;
+}
