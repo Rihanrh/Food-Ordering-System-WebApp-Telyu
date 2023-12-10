@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('Confirm');
+    return view('landpg');
+});
+
+Route::get('/kasir-login', function () {
+    return view('login_kasir');
+});
+
+Route::get('/tenant-login', function () {
+    return view('login_tenant');
 });
