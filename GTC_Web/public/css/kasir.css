@@ -49,3 +49,15 @@ main {
   font-family: 'Poppins', sans-serif !important;
   /* Additional styling properties if needed */
 }
+
+/* Pagination Custom */
+.active>.page-link, .page-link.active {
+  z-index: 3;
+  color: var(--bs-pagination-active-color);
+  background-color: rgba(211, 36, 43, 1) !important;
+  border-color: rgba(211, 36, 43, 1) !important;
+}
+
+.page-link:hover{
+  background-color: rgba(246, 49, 57, 1) !important ;
+}

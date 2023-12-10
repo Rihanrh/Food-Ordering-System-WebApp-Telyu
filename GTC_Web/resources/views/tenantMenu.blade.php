@@ -10,9 +10,11 @@
     <link href="sidebars.css" rel="stylesheet">
 
     <!-- JS + JS Sidebar -->
-    <script src="tenant.js"></script>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="sidebars.js"></script>
+
+    <!-- JS DATATABLE-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -172,10 +174,10 @@
       </div>
 
       <!--Tabel Menu-->
-      <div class="menu" style="width: 80vw; height: 100vh;">
-        <a href="#" class ="btn  mx-4 mt-3" id ="buttonTambahMenu" style="background-color: rgba(211, 36, 43, 1); color: white;"><i class="bi bi-plus-circle"></i>      Tambah Menu</a>
+      <div class="menu mx-5" style="width: 80vw; height: 100vh;">
+      <button type="button" class="btn  mb-3 mt-3" id="buttonTambahMenu" data-bs-toggle="modal" data-bs-target="#popuptambahmenu" style="background-color: rgba(211, 36, 43, 1); color: white;"><i class="bi bi-plus-circle"></i>      Tambah Menu</button>
         
-        <table class ="table  mx-4  mt-4 table-bordered">
+        <table id="menutenant" class ="table  mt-4 table-bordered" style="width:100%">
           <thead>
 
             <tr>
@@ -191,8 +193,8 @@
               <td>Rp20.000</td>
               <td>
                 <div class="col-auto" style="margin-left: 18%;">
-                  <a href="#" class ="btn  mb-0" id ="buttonSunting" style="background-color: white; color: rgba(211, 36, 43, 1); border: 1px solid rgba(211, 36, 43, 1);">Sunting</a>
-                  <button type="button" class="btn mb-0 "id="buttonHapus" style="background-color:rgba(211, 36, 43, 1); color: white;">Hapus</button>
+                <button type="button" class="btn  mb-0" id ="buttonSunting" data-bs-toggle="modal" data-bs-target="#popupsuntingmenu" style="background-color: white; color: rgba(211, 36, 43, 1); border: 1px solid rgba(211, 36, 43, 1);">Sunting</button>
+                    <button type="button" class="btn mb-0 " id="buttonHapus" data-bs-toggle="modal" data-bs-target="#popuphapusmenu" style="background-color:rgba(211, 36, 43, 1); color: white;">Hapus</button>
                 </div>
               </td>
             </tr>  
@@ -201,85 +203,101 @@
         </table>
 
         <!--Popup Tambah Menu-->
-        <div class = "popupAdd">
-          <div class="popup-content ms-5">
-            <form>
-              <img src="assets/close.png"  class="close">
-
+        <div class="modal fade modal-lg" id="popuptambahmenu" >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
               <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Tambah Menu</h3>
-              
-              <div class="row mb-3">
-                <label for="fotoProduk" class="col-sm-3 col-form-label">Foto Produk</label>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                <div class="row mb-3">
+                <label for="fotoProduk" class="col-sm-4 col-form-label">Foto Produk</label>
                 <div class="col-sm">
                   <input type="file" class="form-control" id="fotoProduk">
                 </div>
               </div>
 
               <div class="row mb-3">
-                <label for="namaProduk" class="col-sm-3 col-form-label">Nama Produk</label>
+                <label for="namaProduk" class="col-sm-4 col-form-label">Nama Produk</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="namaProduk">
                 </div>
               </div>
 
               <div class="row mb-3">
-                <label for="hargaProduk" class="col-sm-3 col-form-label">Harga Produk(Rp)</label>
+                <label for="hargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="hargaProduk">
                 </div>
               </div>
-
-              <button type="button" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Tambahkan</button>
-            </form>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Tambahkan</button>
+              </div>
+            </div>
           </div>
         </div>
 
         <!--Popup Sunting Menu-->
-        <div class = "popupSunting">
-          <div class="popup-content ms-5">
-            <form>
-              <img src="assets/close.png"  class="close" id="closeSunting">
+        <div class="modal fade modal-lg" id="popupsuntingmenu">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
               <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Sunting Menu</h3>
-              
-              <div class="row mb-3">
-                <label for="fotoProduk" class="col-sm-3 col-form-label">Foto Produk</label>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                <div class="row mb-3">
+                <label for="fotoProduk" class="col-sm-4 col-form-label">Foto Produk</label>
                 <div class="col-sm">
                   <input type="file" class="form-control" id="fotoProduk">
                 </div>
               </div>
 
               <div class="row mb-3">
-                <label for="namaProduk" class="col-sm-3 col-form-label">Nama Produk</label>
+                <label for="namaProduk" class="col-sm-4 col-form-label">Nama Produk</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="namaProduk" value="Chili Salt Chicken">
                 </div>
               </div>
 
               <div class="row mb-3">
-                <label for="hargaProduk" class="col-sm-3 col-form-label">Harga Produk(Rp)</label>
+                <label for="hargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="hargaProduk" value="20000">
                 </div>
               </div>
-
-              <button type="button" class="btn mb-0 " id="buttonSuntingUbah" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%; width: 140px;">Sunting</button>
-            </form>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Sunting</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!--Popup Delete Menu-->
-        <div class="popupDelete pt-2">
-          <div class="popupDeleteContent ">
-
-            <i class="bi bi-exclamation-circle" style="color: rgba(211, 36, 43, 1) ; font-size: 120px;"></i>
-            <p style="font-weight: bold;">Apakah Anda Yakin Ingin Menghapus Barang Ini ?</p>
-            <button type="button" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
-            <button type="button" class="btn mb-0 " id="buttonNo" style="background-color:rgba(211, 211, 211, 1); color: white;  width: 140px;">Batal</button>
-
+         <!--Popup Hapus Menu-->
+         <div class="modal fade modal-lg" id="popuphapusmenu">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+              <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Hapus Menu</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body mx-auto">
+                <p style="font-weight: bold;">Apakah Anda Yakin Ingin Menghapus Barang Ini ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
+                <button type="button" class="btn mb-0 " id="buttonNo" style="background-color:rgba(211, 211, 211, 1); color: white;  width: 140px;">Batal</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div> 
-    </main>
       
 
     <script>
@@ -312,7 +330,10 @@
         document.querySelector(".popupDelete").style.display = "none";
       });
     </script>
-        
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script  src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <script src="js/tenant.js"></script>
   </body>
 </html>
     

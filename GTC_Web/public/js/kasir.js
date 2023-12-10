@@ -1,3 +1,4 @@
+new DataTable('#menukasir');
 
-/*Menu Kasir */
+new DataTable('#report');
   

@@ -35,3 +35,15 @@ main {
   text-align: center;
   font-size: 20px !important;
 }
+
+/* Pagination Custom */
+.active>.page-link, .page-link.active {
+  z-index: 3;
+  color: var(--bs-pagination-active-color);
+  background-color: rgba(211, 36, 43, 1) !important;
+  border-color: rgba(211, 36, 43, 1) !important;
+}
+
+.page-link:hover{
+  background-color: rgba(246, 49, 57, 1) !important ;
+}
