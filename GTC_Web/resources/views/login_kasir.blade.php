@@ -21,7 +21,13 @@
                 <h4>Masukkan Username dan Password kamu. </h4>
             </div>
             <div class="container row">
-                <form id="loginForm">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+                <form id="loginForm" action="{{ route('kasir.login') }}" method="post">
+                    @csrf
                     <!-- Username Input -->
                         <div>
                             <label for="username" class="label">Username</label>
@@ -36,7 +42,7 @@
                             </div>
                         </div>
                         <!-- Submit Button -->
-                        <a href="Confirm.html" class="login-button anchor-button">Masuk</a>
+                        <button type="submit" class="login-button anchor-button">Masuk</button>
                 </form>
             </div> 
         </div>

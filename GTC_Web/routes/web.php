@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\KasirController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +19,12 @@ Route::get('/', function () {
     return view('landpg');
 });
 
-Route::get('/kasir-login', function () {
-    return view('login_kasir');
-});
+// Routes for Kasir
+Route::get('/kasir-login', [KasirController::class, 'showLoginForm']);
+Route::post('/kasir-login', [KasirController::class, 'login'])->name('kasir.login');
+Route::get('/kasir/confirm', [KasirController::class, 'showConfirmPage'])->name('kasir.confirm');
 
-Route::get('/tenant-login', function () {
-    return view('login_tenant');
-});
+// Routes for Tenant
+Route::get('/tenant-login', [TenantController::class, 'showLoginForm']);
+Route::post('/tenant-login', [TenantController::class, 'login'])->name('tenant.login');
+Route::get('/tenant/tenantListPesanan', [TenantController::class, 'showTenantListPesanan'])->name('tenant.tenantListPesanan');
