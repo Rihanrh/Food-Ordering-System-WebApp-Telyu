@@ -21,25 +21,37 @@
                 <h4>Masukkan Username dan Password kamu. </h4>
             </div>
             <div class="container row">
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
             @endif
                 <form id="loginForm" action="{{ route('kasir.login') }}" method="post">
                     @csrf
                     <!-- Username Input -->
                         <div>
                             <label for="username" class="label">Username</label>
-                            <input class="form-control form-control-lg" type="username" id="username" name="username" placeholder="Enter your username">
+                            <input class="form-control form-control-lg @error('username_kasir') is-invalid @enderror" 
+                            type="username" id="username" name="username_kasir" placeholder="Enter your username">
+                            @error('username_kasir')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <!-- Password Input -->
                         <div class="my-5">
                             <label for="password" class="label">Password</label>
                             <div class="password-input">
-                                <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="Enter your password">
+                                <input class="form-control form-control-lg @error('password_kasir') is-invalid @enderror" 
+                                type="password" id="password" name="password_kasir" placeholder="Enter your password">
                                 <i class="fa fa-eye password-toggle"></i> 
-                            </div>
+                            </div>  
+                            @error('password_kasir')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <!-- Submit Button -->
                         <button type="submit" class="login-button anchor-button">Masuk</button>

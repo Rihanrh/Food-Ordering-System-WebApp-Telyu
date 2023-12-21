@@ -31,13 +31,13 @@
                     <!-- Username Input -->
                         <div>
                             <label for="username" class="label">Username</label>
-                            <input class="form-control form-control-lg" type="username" id="username" name="username" placeholder="Enter your username">
+                            <input class="form-control form-control-lg" type="username" id="username" name="username_tenant" placeholder="Enter your username">
                         </div>
                         <!-- Password Input -->
                         <div class="my-5">
                             <label for="password" class="label">Password</label>
                             <div class="password-input">
-                                <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="Enter your password">
+                                <input class="form-control form-control-lg" type="password" id="password" name="password_tenant" placeholder="Enter your password">
                                 <i class="fa fa-eye password-toggle"></i> 
                             </div>
                         </div>

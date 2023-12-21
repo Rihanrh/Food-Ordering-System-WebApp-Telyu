@@ -69,17 +69,19 @@ class KasirController extends Controller
         $request->validate([
             'username_kasir' => 'required',
             'password_kasir' => 'required|string',
-        ]);
+        ], [
+            'username_kasir.required' => 'Silahkan mengisi username terlebih dahulu',
+            'password_kasir.required' => 'Silahkan mengisi password terlebih dahulu',    
+        ]
+        );
 
         $kasir = Kasir::where('username_kasir', $request->username_kasir)->first();
 
         if (!$kasir || !Hash::check($request->password_kasir, $kasir->password_kasir)) {
-            dd('Invalid credentials');
-            return redirect()->route('kasir.login')->with('error', 'Invalid credentials');
+            return back()->with('error', 'Username or password invalid');
         }
-
-        $token = $kasir->createToken('authToken')->plainTextToken;
-        dd('Login successful'); 
+        
+        $request->session()->regenerate();
         return redirect()->route('kasir.confirm');
     }
 
