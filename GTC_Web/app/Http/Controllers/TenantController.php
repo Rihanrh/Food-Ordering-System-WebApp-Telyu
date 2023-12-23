@@ -72,17 +72,20 @@
             $request->validate([
                 'username_tenant' => 'required',
                 'password_tenant' => 'required|string',
-            ]);
+            ], [
+                'username_tenant.required' => 'Silahkan mengisi username terlebih dahulu',
+                'password_tenant.required' => 'Silahkan mengisi password terlebih dahulu',    
+            ]
+            );
 
             $tenant = Tenant::where('username_tenant', $request->username_tenant)->first();
 
-            if (!$tenant || !Hash::check($request->password, $tenant->password)) {
-                return redirect()->route('tenant.login')->with('error', 'Invalid credentials');
+            if (!$tenant || !Hash::check($request->password_tenant, $tenant->password_tenant)) {
+                return back()->with('error', 'Username or password invalid');
             }
-
-            $token = $tenant->createToken('authToken')->plainTextToken;
-
-            return redirect()->route('tenant.listPesanan');
+            
+            $request->session()->regenerate();
+            return redirect()->route('tenant.tenantListPesanan');
         }
         public function showLoginForm()
         {

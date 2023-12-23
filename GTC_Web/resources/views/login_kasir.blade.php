@@ -41,12 +41,10 @@
                         </div>
                         <!-- Password Input -->
                         <div class="my-5">
-                            <label for="password" class="label">Password</label>
-                            <div class="password-input">
-                                <input class="form-control form-control-lg @error('password_kasir') is-invalid @enderror" 
+                            <span class="label">Password</span>
+                            <input class="form-control form-control-lg @error('password_kasir') is-invalid @enderror" 
                                 type="password" id="password" name="password_kasir" placeholder="Enter your password">
-                                <i class="fa fa-eye password-toggle"></i> 
-                            </div>  
+                            <i class="fa fa-eye password-toggle"></i> 
                             @error('password_kasir')
                                 <div class="invalid-feedback">
                                     {{ $message }}
