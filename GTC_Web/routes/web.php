@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\KasirController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,15 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('landpg');
-});
-
-Route::get('/kasir-login', function () {
-    return view('login_kasir');
-});
-
-Route::get('/tenant-login', function () {
-    return view('login_tenant');
-});
+// Route::get('/', function () {
+//     return view('tenantMenu');
+// });
+Route::get('/', [MenuController::class, 'index']);
+Route::resource('/menu', MenuController::class);
+Route::resource('/kasir', KasirController::class);
