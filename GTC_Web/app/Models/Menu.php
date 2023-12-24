@@ -9,11 +9,15 @@ class Menu extends Model
 {
     use HasFactory;
     protected $fillable = [
+
         "fotoProduk",
         "namaProduk",
         "HargaProduk"
+
     ];
     
-
+    public function tenant(){
+        return $this->belongsTo(Tenant::class,'id','idTenant');
+    }
 
 }
