@@ -9,11 +9,9 @@ class Menu extends Model
 {
     use HasFactory;
     protected $fillable = [
-
         "fotoProduk",
         "namaProduk",
         "HargaProduk"
-
     ];
     
     public function tenant(){

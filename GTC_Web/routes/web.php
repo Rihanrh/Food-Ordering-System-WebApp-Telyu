@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KasirController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 
@@ -18,3 +19,4 @@ use App\Http\Controllers\MenuController;
 // });
 Route::get('/', [MenuController::class, 'index']);
 Route::resource('/menu', MenuController::class);
+Route::resource('/kasir', KasirController::class);
