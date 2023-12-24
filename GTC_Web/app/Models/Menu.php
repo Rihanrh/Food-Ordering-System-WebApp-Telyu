@@ -14,6 +14,8 @@ class Menu extends Model
         "HargaProduk"
     ];
     
-
+    public function tenant(){
+        return $this->belongsTo(Tenant::class,'id','idTenant');
+    }
 
 }

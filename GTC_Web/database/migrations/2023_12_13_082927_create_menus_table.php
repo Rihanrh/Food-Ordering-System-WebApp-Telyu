@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('hargaProduk');
             $table->string('stokProduk');
             $table->timestamps();
+            $table->foreignId('idTenant')->constrained('tenants','id')->onDelete('cascade');
         });
     }
 
