@@ -13,10 +13,10 @@ class KasirSeeder extends Seeder
      */
     public function run(): void
     {
-        //Kasir::create([
-         //   'nama_kasir' => 'Rihan',
-           // 'username_kasir' => 'RihanDuit',
-            //'password_kasir' => bcrypt('money'),
-       // ]);
+        Kasir::create([
+            'nama_kasir' => 'Rihan',
+            'username_kasir' => 'RihanDuit',
+            'password_kasir' => bcrypt('money'),
+        ]);
     }
 }
