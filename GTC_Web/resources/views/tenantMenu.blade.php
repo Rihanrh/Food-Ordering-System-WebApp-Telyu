@@ -130,6 +130,7 @@
 
       
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 </head>
   <body>
@@ -181,23 +182,31 @@
           <thead>
 
             <tr>
-              <td class="table-danger" style="width: 50vw;">Nama Produk</td>
+              <td class="table-danger">Foto Produk</td>
+              <td class="table-danger" >Nama Produk</td>
               <td class="table-danger">Harga</td>
+              <td class="table-danger">Stok</td>
               <td class="table-danger">Sunting / Hapus </td>
             </tr>
           </thead>
       
           <tbody>
+          @foreach($menu as $menu)
             <tr>
-              <td><img src="assets/chili salt chicken.jpeg" alt=""width="10%" >  Chili Salt Chicken</td>
-              <td>Rp20.000</td>
+
+              <td><img src="file/{{$menu->fotoProduk}}" alt=""width="10%" >  </td>
+              <td>{{$menu->namaProduk}}</td>
+              <td>{{$menu->hargaProduk}}</td>
+              <td>{{$menu->stokProduk}}</td>
               <td>
                 <div class="col-auto" style="margin-left: 18%;">
-                <button type="button" class="btn  mb-0" id ="buttonSunting" data-bs-toggle="modal" data-bs-target="#popupsuntingmenu" style="background-color: white; color: rgba(211, 36, 43, 1); border: 1px solid rgba(211, 36, 43, 1);">Sunting</button>
-                    <button type="button" class="btn mb-0 " id="buttonHapus" data-bs-toggle="modal" data-bs-target="#popuphapusmenu" style="background-color:rgba(211, 36, 43, 1); color: white;">Hapus</button>
+                  <button type="button" class="btn  mb-0" id="buttonSunting" data-id="{{$menu->id}}" data-bs-toggle="modal" data-bs-target="#popupsuntingmenu" style="background-color: white; color: rgba(211, 36, 43, 1); border: 1px solid rgba(211, 36, 43, 1);">Sunting</button>
+                  <button type="button" class="btn mb-0 " id="buttonHapus"  data-id="{{ $menu->id }}" data-bs-toggle="modal" data-bs-target="#popuphapusmenu" style="background-color:rgba(211, 36, 43, 1); color: white;">Hapus</button>
                 </div>
               </td>
-            </tr>  
+              
+            </tr> 
+          @endforeach 
           </tbody>
 
         </table>
@@ -211,31 +220,40 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form action="/menu" method="POST" enctype="multipart/form-data">
+                  @csrf
                 <div class="row mb-3">
                 <label for="fotoProduk" class="col-sm-4 col-form-label">Foto Produk</label>
                 <div class="col-sm">
-                  <input type="file" class="form-control" id="fotoProduk">
+                  <input type="file" class="form-control" id="fotoProduk" name="tambahFotoProduk">
                 </div>
               </div>
 
               <div class="row mb-3">
                 <label for="namaProduk" class="col-sm-4 col-form-label">Nama Produk</label>
                 <div class="col-sm">
-                  <input type="text" class="form-control" id="namaProduk">
+                  <input type="text" class="form-control" id="namaProduk" name="tambahNamaProduk">
                 </div>
               </div>
 
               <div class="row mb-3">
                 <label for="hargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
                 <div class="col-sm">
-                  <input type="text" class="form-control" id="hargaProduk">
+                  <input type="text" class="form-control" id="hargaProduk" name="tambahHargaProduk">
                 </div>
               </div>
-                </form>
+
+              <div class="row mb-3">
+                <label for="stokProduk" class="col-sm-4 col-form-label">Stok Produk</label>
+                <div class="col-sm">
+                  <input type="text" class="form-control" id="stokProduk" name="tambahStokProduk">
+                </div>
               </div>
+
               <div class="modal-footer">
-                <button type="button" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Tambahkan</button>
+                <button type="submit" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Tambahkan</button>
+              </div>
+                </form>
               </div>
             </div>
           </div>
@@ -249,32 +267,42 @@
               <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Sunting Menu</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+              <form action="/menu" id="suntingForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('put')
               <div class="modal-body">
-                <form>
                 <div class="row mb-3">
                 <label for="fotoProduk" class="col-sm-4 col-form-label">Foto Produk</label>
                 <div class="col-sm">
-                  <input type="file" class="form-control" id="fotoProduk">
+                  <input type="file" class="form-control" id="suntingFotoProduk" name="suntingFotoProduk">
+                </div>
+                
+                <div class="row mb-3">
+                  <label for="suntingNamaProduk" class="col-sm-4 col-form-label">Nama Produk</label>
+                  <div class="col-sm">
+                    <input type="text" class="form-control"  id="suntingNamaProduk" name="suntingNamaProduk">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <label for="suntingHargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
+                  <div class="col-sm">
+                  <input type="number" class="form-control" id="suntingHargaProduk" name="suntingHargaProduk">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <label for="suntingStokProduk" class="col-sm-4 col-form-label">stok Produk</label>
+                  <div class="col-sm">
+                    <input type="number" class="form-control" name="suntingStokProduk" id="suntingStokProduk">
+                  </div>
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <label for="namaProduk" class="col-sm-4 col-form-label">Nama Produk</label>
-                <div class="col-sm">
-                  <input type="text" class="form-control" id="namaProduk" value="Chili Salt Chicken">
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <label for="hargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
-                <div class="col-sm">
-                  <input type="text" class="form-control" id="hargaProduk" value="20000">
-                </div>
-              </div>
-                </form>
-              </div>
               <div class="modal-footer">
-                <button type="button" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Sunting</button>
+                <button type="submit" class="btn mb-0 " id="buttonSuntingUbah" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Sunting</button>
+              </div>
+              </form>
               </div>
             </div>
           </div>
@@ -292,48 +320,85 @@
                 <p style="font-weight: bold;">Apakah Anda Yakin Ingin Menghapus Barang Ini ?</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
-                <button type="button" class="btn mb-0 " id="buttonNo" style="background-color:rgba(211, 211, 211, 1); color: white;  width: 140px;">Batal</button>
+                <form action="/menu" method="POST" id="deleteForm" enctype="multipart/form-data">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
+                  <button type="button" class="btn mb-0 " id="buttonNo" style="background-color:rgba(211, 211, 211, 1); color: white;  width: 140px;">Batal</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       
 
+    <script  src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="js/tenant.js"></script>
     <script>
+      
       // Popup Tambah Menu Show
-      document.getElementById("buttonTambahMenu").addEventListener("click", function () {
-        document.querySelector(".popupAdd").style.display = "flex";
-      });
+      // document.getElementById("buttonTambahMenu").addEventListener("click", function () {
+      //   document.querySelector(".popupAdd").style.display = "flex";
+      // });
       
-      // Popup Tambah Menu Close
-      document.querySelector(".close").addEventListener("click", function () {
-        document.querySelector(".popupAdd").style.display = "none";
-      });
+      // // Popup Tambah Menu Close
+      // document.querySelector(".close").addEventListener("click", function () {
+      //   document.querySelector(".popupAdd").style.display = "none";
+      // });
       
-      // Popup Sunting Menu Show
-      document.getElementById("buttonSunting").addEventListener("click", function () {
-        document.querySelector(".popupSunting").style.display = "flex";
-      });
+      // // Popup Sunting Menu Show
+      // // document.getElementById("buttonSunting").addEventListener("click", function () {
+      // //   document.querySelector(".popupSunting").style.display = "flex";
+      // // });
       
-      // Popup Sunting Menu Close
-      document.querySelector("#closeSunting").addEventListener("click", function () {
-        document.querySelector(".popupSunting").style.display = "none";
-      });
+      // // Popup Sunting Menu Close
+      // // document.querySelector("#closeSunting").addEventListener("click", function () {
+      // //   document.querySelector(".popupSunting").style.display = "none";
+      // // });
 
-      // Popup Hapus Menu Show
-      document.getElementById("buttonHapus").addEventListener("click", function () {
-        document.querySelector(".popupDelete").style.display = "flex";
-      });
-      // Popup Hapus Menu Cancel
-      document.getElementById("buttonNo").addEventListener("click", function () {
-        document.querySelector(".popupDelete").style.display = "none";
+      // // Popup Hapus Menu Show
+      // document.getElementById("buttonHapus").addEventListener("click", function () {
+      //   document.querySelector(".popupDelete").style.display = "flex";
+      // });
+      // // Popup Hapus Menu Cancel
+      // document.getElementById("buttonNo").addEventListener("click", function () {
+      //   document.querySelector(".popupDelete").style.display = "none";
+      // });
+      document.addEventListener('DOMContentLoaded',function(){
+        const sunting = document.querySelectorAll('#buttonSunting');
+        const hapus = document.querySelectorAll('#buttonHapus');
+        
+
+        sunting.forEach(function(button){
+          button.addEventListener('click', function(){
+            const id = button.getAttribute('data-id');
+            suntingForm.action = `/menu/${id}`;
+            
+            fetch(`/menu/${id}`)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                document.getElementById('suntingNamaProduk').value = data.namaproduk;
+                document.getElementById('suntingHargaProduk').value = data.hargaproduk;
+                document.getElementById('suntingStokProduk').value = data.stokproduk;
+              })
+          });
+        });
+
+        hapus.forEach(function (button) {
+          button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            deleteForm.action = `/menu/${id}`;
+          })
+        })
       });
     </script>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script  src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-        <script src="js/tenant.js"></script>
+        
   </body>
 </html>
-    
+<!--INI YG BARU -->
