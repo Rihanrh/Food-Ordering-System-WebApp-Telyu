@@ -23,7 +23,7 @@
         </div>
             
         <div class="d-flex gap-3">
-            <a class="text-decoration-none" href="login_kasir.blade.php">
+            <a class="text-decoration-none" href="{{ route('kasir.login') }}">
                 <div class="bg-white rounded-3 ps-2 pe-5 py-2">
                     <div class="gap-2 d-flex align-items-center">
                         <div class="bg-black rounded-5 p-2">
@@ -35,7 +35,7 @@
                 </div>
             </a>    
             
-            <a class="text-decoration-none" href="login_tenant.html">
+            <a class="text-decoration-none" href="{{ route('tenant.login') }}">
                 <div class="bg-white rounded-3 ps-2 pe-5 py-2">
                     <div class="gap-2 d-flex align-items-center">
                         <div class="bg-black rounded-5 p-2">

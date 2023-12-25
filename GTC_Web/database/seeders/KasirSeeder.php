@@ -4,19 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Tenant;
+use App\Models\Kasir;
 
-class TenantSeeder extends Seeder
+class KasirSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Tenant::create([
-            'nama_tenant' => 'test',
-            'username_tenant' => 'test',
-            'password_tenant' => bcrypt('test1'),
+        Kasir::create([
+            'nama_kasir' => 'Rihan',
+            'username_kasir' => 'RihanDuit',
+            'password_kasir' => bcrypt('money'),
         ]);
     }
 }

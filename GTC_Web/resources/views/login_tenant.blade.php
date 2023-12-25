@@ -21,22 +21,40 @@
                 <h4>Masukkan Username dan Password kamu. </h4>
             </div>
             <div class="container row">
-                <form id="loginForm">
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
+                <form id="loginForm" action="{{ route('tenant.login') }}" method="post">
+                    @csrf
                     <!-- Username Input -->
-                        <div>
-                            <label for="username" class="label">Username</label>
-                            <input class="form-control form-control-lg" type="username" id="username" name="username" placeholder="Enter your username">
-                        </div>
-                        <!-- Password Input -->
-                        <div class="my-5">
-                            <label for="password" class="label">Password</label>
-                            <div class="password-input">
-                                <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="Enter your password">
-                                <i class="fa fa-eye password-toggle"></i> 
+                    <div>
+                        <label for="username" class="label">Username</label>
+                        <input class="form-control form-control-lg @error('username_tenant') is-invalid @enderror" 
+                            type="username" id="username" name="username_tenant" placeholder="Enter your username">
+                        @error('username_tenant')
+                            <div class="invalid-feedback">
+                                {{ $message }}
                             </div>
-                        </div>
-                        <!-- Submit Button -->
-                        <a href="tenantListPesanan.html" class="login-button anchor-button">Masuk</a>
+                        @enderror
+                    </div>
+                    <!-- Password Input -->
+                    <div class="my-5 input-group">
+                        <input class="form-control form-control-lg rounded-4 @error('password_tenant') is-invalid @enderror" 
+                            type="password" id="password" name="password_tenant" placeholder="Enter your password">
+                            <span class="password-toggle" onclick="togglePassword()">
+                                <i id="eye-icon" class="fa fa-eye"></i>
+                            </span>
+                        @error('password_tenant')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="login-button anchor-button">Masuk</button>
                 </form>
             </div> 
         </div>
@@ -56,21 +74,20 @@
 
     <!-- JavaScript Eye Icon-->
     <script>
-        $(".password-toggle").click(function () {
-            var passwordField = $("#password");
-            var icon = $(this); 
-    
-            var fieldType = passwordField.attr("type");
-            if (fieldType === "password") {
-                passwordField.attr("type", "text");
-                icon.removeClass("fa-eye"); 
-                icon.addClass("fa-eye-slash"); 
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
             } else {
-                passwordField.attr("type", "password");
-                icon.removeClass("fa-eye-slash"); 
-                icon.addClass("fa-eye"); 
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
             }
-        });
+        }
     </script>
     
 </body>
