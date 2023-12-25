@@ -2,14 +2,14 @@
 
     namespace App\Http\Controllers;
 
-    use App\Models\Tenant;
+    use App\Models\AkunTenant;
     use App\Http\Requests\StoreTenantRequest;
     use App\Http\Requests\UpdateTenantRequest;
 
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
 
-    class TenantController extends Controller
+    class AkunTenantController extends Controller
     {
         /**
          * Display a listing of the resource.
@@ -78,7 +78,7 @@
             ]
             );
 
-            $tenant = Tenant::where('username_tenant', $request->username_tenant)->first();
+            $tenant = AkunTenant::where('username_tenant', $request->username_tenant)->first();
 
             if (!$tenant || !Hash::check($request->password_tenant, $tenant->password_tenant)) {
                 return back()->with('error', 'Username or password invalid');

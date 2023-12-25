@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Kasir;
+use App\Models\AkunKasir;
 
 class KasirSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class KasirSeeder extends Seeder
      */
     public function run(): void
     {
-        Kasir::create([
+        AkunKasir::create([
             'nama_kasir' => 'Rihan',
             'username_kasir' => 'RihanDuit',
             'password_kasir' => bcrypt('money'),

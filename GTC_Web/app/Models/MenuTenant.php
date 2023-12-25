@@ -15,7 +15,7 @@ class Menu extends Model
     ];
     
     public function tenant(){
-        return $this->belongsTo(Tenant::class,'id','idTenant');
+        return $this->belongsTo(AkunTenant::class,'id','idTenant');
     }
 
 }

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
+use App\Models\MenuTenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class MenuController extends Controller
+class MenuTenantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $menus = Menu::all();
+        $menus = MenuTenant::all();
         return view("tenantMenu", ['menu'=>$menus ]);
 
     }
@@ -38,7 +38,7 @@ class MenuController extends Controller
             'tambahStokProduk'=> 'required|numeric',
 
         ]);
-        $menu = new Menu();
+        $menu = new MenuTenant();
         $menu->fotoProduk = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $menu->namaProduk = $data['tambahNamaProduk'];
         $menu->hargaProduk = $data['tambahHargaProduk'];
@@ -54,9 +54,9 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Menu $menu)
+    public function show(MenuTenant $menu)
     {
-        $menu = Menu::where('id', $menu->id)->first();
+        $menu = MenuTenant::where('id', $menu->id)->first();
 
         if ($menu){
             return response()->json([
@@ -73,7 +73,7 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Menu $menu)
+    public function edit(MenuTenant $menu)
     {
         
     }
@@ -81,9 +81,9 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, MenuTenant $menu)
     {
-        $menus = Menu::where('id', $menu->id)->first();
+        $menus = MenuTenant::where('id', $menu->id)->first();
 
         $data = $request->validate([
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
@@ -112,12 +112,12 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Menu $menu)
+    public function destroy(MenuTenant $menu)
     {
-        $menus = Menu::where('id', $menu->id)->first();
+        $menus = MenuTenant::where('id', $menu->id)->first();
         $file = public_path('file/' . $menus->fotoProduk);
         File::delete($file);
-        Menu::destroy($menu->id);
+        MenuTenant::destroy($menu->id);
         
         return redirect('/menu')->with('success','Hapus berhasil');
     }

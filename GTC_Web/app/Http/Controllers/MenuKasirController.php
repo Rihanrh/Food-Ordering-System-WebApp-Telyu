@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Kasir;
+use App\Models\MenuKasir;
 use Illuminate\Support\Facades\File;
 
-class KasirController extends Controller
+class MenuKasirController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kasirs = Kasir::orderBy('id','asc')->paginate(2);
+        $kasirs = MenuKasir::orderBy('id','asc')->paginate(2);
         // $kasirs = Kasir::paginate(2);
         return view("menu", ['kasirs'=>$kasirs]);
     }
@@ -38,7 +38,7 @@ class KasirController extends Controller
             'tambahHargaProduk'=> 'required|numeric',
             'tambahStokProduk'=> 'required|numeric',
         ]);
-        $kasir = new Kasir();
+        $kasir = new MenuKasir();
         $kasir->foto = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $kasir->nama_produk = $data['tambahNamaProduk'];
         $kasir->harga_produk = $data['tambahHargaProduk'];
@@ -53,9 +53,9 @@ class KasirController extends Controller
      * Display the specified resource.
      */
 
-    public function show(Kasir $kasir)
+    public function show(MenuKasir $kasir)
     {
-        $kasir = Kasir::where('id', $kasir->id)->first();
+        $kasir = MenuKasir::where('id', $kasir->id)->first();
 
         if($kasir){
             return response()->json([
@@ -80,9 +80,9 @@ class KasirController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, Kasir $kasir)
+    public function update(Request $request, MenuKasir $kasir)
     {
-        $kasirs = Kasir::where('id', $kasir->id)->first();
+        $kasirs = MenuKasir::where('id', $kasir->id)->first();
 
         $data = $request->validate([
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
@@ -110,42 +110,12 @@ class KasirController extends Controller
      * Remove the specified resource from storage.
      */
 
-    public function login(Request $request)
+    public function destroy(MenuKasir $kasir)
     {
-        $request->validate([
-            'username_kasir' => 'required',
-            'password_kasir' => 'required|string',
-        ], [
-            'username_kasir.required' => 'Silahkan mengisi username terlebih dahulu',
-            'password_kasir.required' => 'Silahkan mengisi password terlebih dahulu',    
-        ]
-        );
-
-        $kasir = Kasir::where('username_kasir', $request->username_kasir)->first();
-
-        if (!$kasir || !Hash::check($request->password_kasir, $kasir->password_kasir)) {
-            return back()->with('error', 'Username or password invalid');
-        }
-        
-        $request->session()->regenerate();
-        return redirect()->route('kasir.confirm');
-    }
-
-    public function showLoginForm()
-    {
-        return view('login_kasir'); 
-    }
-  
-    public function showConfirmPage()
-    {
-        return view('Confirm');
-
-    public function destroy(Kasir $kasir)
-    {
-        $kasirs = Kasir::where('id', $kasir->id)->first();
+        $kasirs = MenuKasir::where('id', $kasir->id)->first();
         $file = public_path('file/'.$kasirs->foto);
         File::delete($file);
-        Kasir::destroy($kasir->id);
+        MenuKasir::destroy($kasir->id);
 
         return redirect('/kasir')->with('success','Hapus berhasil');
     }

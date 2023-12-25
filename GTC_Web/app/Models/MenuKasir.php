@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class Kasir extends Model
+class MenuKasir extends Model
 {
     use HasFactory;
     protected $fillable = ["foto","nama_produk","harga_produk","stok_produk"];
-    // protected $table = 'kasirs';
+    protected $table = 'menu_kasirs';
 }

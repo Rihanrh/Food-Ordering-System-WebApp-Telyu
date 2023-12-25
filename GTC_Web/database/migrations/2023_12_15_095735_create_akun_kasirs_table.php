@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-    Schema::table('menus', function($table) {
-        $table->integer('stokProduk');
-    });
+        Schema::create('akun_kasirs', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_kasir');
+            $table->string('username_kasir');
+            $table->string('password_kasir');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('stokProduk');
-        });
+        Schema::dropIfExists('akun_kasirs');
     }
 };
