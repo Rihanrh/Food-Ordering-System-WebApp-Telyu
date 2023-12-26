@@ -15,8 +15,8 @@ class KasirSeeder extends Seeder
     {
         AkunKasir::create([
             'nama_kasir' => 'Rihan',
-            'username_kasir' => 'RihanDuit',
-            'password_kasir' => bcrypt('money'),
+            'username_kasir' => 'rihan_kasir',
+            'password_kasir' => bcrypt('test'),
         ]);
     }
 }

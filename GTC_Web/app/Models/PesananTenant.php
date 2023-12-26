@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuTenant extends Model
+class PesananTenant extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        "fotoProduk",
-        "namaProduk",
-        "HargaProduk"
-    ];
 
-    protected $table = 'menu_tenants';
-    
+    protected $guarded = ['id'];
+
+    protected $table = 'pesanan_tenants';
+
     public function tenant(){
         return $this->belongsTo(AkunTenant::class,'id','idTenant');
     }
 
+    public function menu(){
+        return $this->hasMany(MenuTenant::class,'id','idMenu');
+    }
 }

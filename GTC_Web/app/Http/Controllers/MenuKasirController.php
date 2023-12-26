@@ -14,7 +14,7 @@ class MenuKasirController extends Controller
      */
     public function index()
     {
-        $kasirs = MenuKasir::orderBy('id','asc')->paginate(2);
+        $kasirs = MenuKasir::where('idKasir', auth()->guard('kasir')->id())->orderBy('id','asc')->paginate(2);
         // $kasirs = Kasir::paginate(2);
         return view("menu", ['kasirs'=>$kasirs]);
     }
@@ -43,10 +43,11 @@ class MenuKasirController extends Controller
         $kasir->nama_produk = $data['tambahNamaProduk'];
         $kasir->harga_produk = $data['tambahHargaProduk'];
         $kasir->stok_produk = $data['tambahStokProduk'];
+        $kasir->idKasir = auth()->guard('kasir')->id();
 
         $request->tambahFotoProduk->move(public_path('file'), $request->tambahFotoProduk->getClientOriginalName());
         $kasir->save();
-        return redirect('/kasir')->with('success','Produk Telah Ditambahkan');
+        return redirect('/menuKasir')->with('success','Produk Telah Ditambahkan');
     }
 
     /**
@@ -80,9 +81,9 @@ class MenuKasirController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, MenuKasir $kasir)
+    public function update(Request $request, string $id)
     {
-        $kasirs = MenuKasir::where('id', $kasir->id)->first();
+        $kasirs = MenuKasir::where('id', $id)->first();
 
         $data = $request->validate([
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
@@ -103,20 +104,20 @@ class MenuKasirController extends Controller
         }
 
         $kasirs->save();
-        return redirect('/kasir')->with('success','Menu Telah Disunting');
+        return redirect('/menuKasir')->with('success','Menu Telah Disunting');
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
-    public function destroy(MenuKasir $kasir)
+    public function destroy(string $id)
     {
-        $kasirs = MenuKasir::where('id', $kasir->id)->first();
+        $kasirs = MenuKasir::where('id', $id)->first();
         $file = public_path('file/'.$kasirs->foto);
         File::delete($file);
-        MenuKasir::destroy($kasir->id);
+        MenuKasir::destroy($id);
 
-        return redirect('/kasir')->with('success','Hapus berhasil');
+        return redirect('/menuKasir')->with('success','Hapus berhasil');
     }
 }

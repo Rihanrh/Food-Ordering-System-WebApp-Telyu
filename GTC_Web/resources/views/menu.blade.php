@@ -14,8 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-
-
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -179,10 +177,15 @@
         <div class="dropdown">
           <a href="#Syalala" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="assets/pp kasir.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>Syalala</strong>
+            <strong>{{ auth()->guard('kasir')->user()->nama_kasir }}</strong>
           </a>
           <ul class="dropdown-menu  text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="landpg.html">Keluar</a></li>
+            <li>
+              <form action="{{ route('kasir.keluar') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item" href="landpg.html">Keluar</button>
+              </form>
+            </li>
           </ul>
         </div>
       </div>
@@ -243,7 +246,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="/kasir" method="POST" enctype="multipart/form-data">
+            <form action="/menuKasir" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="row mb-3">
                 <label for="foto" class="col-sm-4 col-form-label">Foto Produk</label>
@@ -289,7 +292,7 @@
             <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Sunting Menu</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form action="/kasir" id="suntingForm" method="POST" enctype="multipart/form-data">
+          <form action="/menuKasir" id="suntingForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="modal-body">
@@ -341,7 +344,7 @@
             <p style="font-weight: bold;">Apakah Anda Yakin Ingin Menghapus Barang Ini ?</p>
           </div>
           <div class="modal-footer">
-            <form action="/kasir" method="POST" id="deleteForm" enctype="multipart/form-data">
+            <form action="/menuKasir" method="POST" id="deleteForm" enctype="multipart/form-data">
               @csrf
               @method('delete')
               <button type="submit" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
@@ -385,9 +388,9 @@
         sunting.forEach(function(button) {
           button.addEventListener('click', function() {
             const id = button.getAttribute('data-id');
-            suntingForm.action = `/kasir/${id}`;
+            suntingForm.action = `/menuKasir/${id}`;
 
-            fetch(`/kasir/${id}`).then(response => {
+            fetch(`/menuKasir/${id}`).then(response => {
                 if (!response.ok) {
                   throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -404,7 +407,7 @@
         hapus.forEach(function(button) {
           button.addEventListener('click', function() {
             const id = button.getAttribute('data-id');
-            deleteForm.action = `/kasir/${id}`;
+            deleteForm.action = `/menuKasir/${id}`;
           })
         })
       });

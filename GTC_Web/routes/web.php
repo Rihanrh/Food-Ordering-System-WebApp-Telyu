@@ -26,11 +26,15 @@ Route::get('/', function () {
 Route::get('/kasir-login', [AkunKasirController::class, 'showLoginForm']);
 Route::post('/kasir-login', [AkunKasirController::class, 'login'])->name('kasir.login');
 Route::get('/kasir/confirm', [AkunKasirController::class, 'showConfirmPage'])->name('kasir.confirm');
+Route::post('/kasir-keluar', [AkunKasirController::class, 'logout'])->name('kasir.keluar');
 
 // Routes for Tenant
 Route::get('/tenant-login', [AkunTenantController::class, 'showLoginForm']);
 Route::post('/tenant-login', [AkunTenantController::class, 'login'])->name('tenant.login');
-Route::get('/tenant/tenantListPesanan', [AkunTenantController::class, 'showTenantListPesanan'])->name('tenant.tenantListPesanan');
+Route::post('/tenant-keluar', [AkunTenantController::class, 'logout'])->name('tenant.keluar');
+
+//Route::get('/tenant/tenantMenu', [AkunTenantController::class, 'showMenuTenant'])->name('menuTenant.tenantMenu');
+
 
 // Route::get('/', function () {
 //     return view('tenantMenu');

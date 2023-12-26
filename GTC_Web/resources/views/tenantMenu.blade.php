@@ -164,11 +164,15 @@
           <!--Dropdown-->
           <div class="dropdown">
             <a href="#Syalala" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="assets/Nasi Goreng.jpeg" alt="" width="32" height="32" class="rounded-circle me-2">
-              <strong>Rasya</strong>
+              <strong>{{ auth()->guard('tenant')->user()->nama_tenant }}</strong>
             </a>
             <ul class="dropdown-menu  text-small shadow" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="landpg.html">Keluar</a></li>
+              <li>
+                <form action="{{ route('tenant.keluar') }}" method="POST">
+                  @csrf
+                  <button type="submit" class="dropdown-item" href="landpg.html">Keluar</button>
+                </form>
+              </li>
           </ul>
           </div>
         </div>
@@ -183,7 +187,7 @@
 
             <tr>
               <td class="table-danger">Foto Produk</td>
-              <td class="table-danger" >Nama Produk</td>
+              <td class="table-danger">Nama Produk</td>
               <td class="table-danger">Harga</td>
               <td class="table-danger">Stok</td>
               <td class="table-danger">Sunting / Hapus </td>
@@ -191,7 +195,7 @@
           </thead>
       
           <tbody>
-          @foreach($menu as $menu)
+          @foreach($menus as $menu)
             <tr>
 
               <td><img src="file/{{$menu->fotoProduk}}" alt=""width="10%" >  </td>
@@ -220,7 +224,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="/menu" method="POST" enctype="multipart/form-data">
+                <form action="/menuTenant" method="POST" enctype="multipart/form-data">
                   @csrf
                 <div class="row mb-3">
                 <label for="fotoProduk" class="col-sm-4 col-form-label">Foto Produk</label>
@@ -267,7 +271,7 @@
               <h3 class="mb-4 mt-4" style="color: rgba(211, 36, 43, 1); font-weight: bold; margin-top: 2px; ">Sunting Menu</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="/menu" id="suntingForm" method="POST" enctype="multipart/form-data">
+              <form action="/menuTenant" id="suntingForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
               <div class="modal-body">
@@ -308,8 +312,8 @@
           </div>
         </div>
 
-         <!--Popup Hapus Menu-->
-         <div class="modal fade modal-lg" id="popuphapusmenu">
+        <!--Popup Hapus Menu-->
+        <div class="modal fade modal-lg" id="popuphapusmenu">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -320,7 +324,7 @@
                 <p style="font-weight: bold;">Apakah Anda Yakin Ingin Menghapus Barang Ini ?</p>
               </div>
               <div class="modal-footer">
-                <form action="/menu" method="POST" id="deleteForm" enctype="multipart/form-data">
+                <form action="/menuTenant" method="POST" id="deleteForm" enctype="multipart/form-data">
                   @csrf
                   @method('delete')
                   <button type="submit" class="btn mb-0 " id="buttonYes" style="background-color:rgba(211, 36, 43, 1); color: white;  width: 140px;">Ya</button>
@@ -373,9 +377,9 @@
         sunting.forEach(function(button){
           button.addEventListener('click', function(){
             const id = button.getAttribute('data-id');
-            suntingForm.action = `/menu/${id}`;
+            suntingForm.action = `/menuTenant/${id}`;
             
-            fetch(`/menu/${id}`)
+            fetch(`/menuTenant/${id}`)
               .then(response => {
                 if (!response.ok) {
                   throw new Error(`HTTP error! Status: ${response.status}`);
@@ -393,7 +397,7 @@
         hapus.forEach(function (button) {
           button.addEventListener('click', function() {
             const id = button.getAttribute('data-id');
-            deleteForm.action = `/menu/${id}`;
+            deleteForm.action = `/menuTenant/${id}`;
           })
         })
       });

@@ -13,8 +13,8 @@ class MenuTenantController extends Controller
      */
     public function index()
     {
-        $menus = MenuTenant::all();
-        return view("tenantMenu", ['menu'=>$menus ]);
+        $menus = MenuTenant::where('idTenant', auth()->guard('tenant')->id())->get();
+        return view("tenantMenu", ['menus'=>$menus]);
 
     }
 
@@ -43,11 +43,12 @@ class MenuTenantController extends Controller
         $menu->namaProduk = $data['tambahNamaProduk'];
         $menu->hargaProduk = $data['tambahHargaProduk'];
         $menu->stokProduk = $data['tambahStokProduk'];
+        $menu->idTenant = auth()->guard('tenant')->id();
 
         $request->tambahFotoProduk->move(public_path('file'), $request->tambahFotoProduk->getClientOriginalName());
 
         $menu->save();
-        return redirect('/menu')->with('success','Menu Telah Ditambahkan');
+        return redirect('/menuTenant')->with('success','Menu Telah Ditambahkan');
 
     }
 
@@ -81,9 +82,9 @@ class MenuTenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MenuTenant $menu)
+    public function update(Request $request, string $id)
     {
-        $menus = MenuTenant::where('id', $menu->id)->first();
+        $menus = MenuTenant::where('id', $id)->first();
 
         $data = $request->validate([
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
@@ -106,19 +107,19 @@ class MenuTenantController extends Controller
         }
 
         $menus->save();
-        return redirect('/menu')->with('success','Menu Telah Disunting');
+        return redirect('/menuTenant')->with('success','Menu Telah Disunting');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MenuTenant $menu)
+    public function destroy(string $id)
     {
-        $menus = MenuTenant::where('id', $menu->id)->first();
+        $menus = MenuTenant::where('id', $id)->first();
         $file = public_path('file/' . $menus->fotoProduk);
         File::delete($file);
-        MenuTenant::destroy($menu->id);
+        MenuTenant::destroy($id);
         
-        return redirect('/menu')->with('success','Hapus berhasil');
+        return redirect('/menuTenant')->with('success','Hapus berhasil');
     }
 }

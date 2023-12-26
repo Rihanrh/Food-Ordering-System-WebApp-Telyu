@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="css/kasir.css">
     <link href="sidebars.css" rel="stylesheet">
 
-    
-
     <!-- JS DATATABLE-->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -99,7 +97,7 @@
                 </ul>
             </div>
         </div>
-      </div>
+    </div>
 
     <div class="container mb-2" style="height: 100vh; margin: 0;">
         <div class="card bg-light-subtle mt-4">

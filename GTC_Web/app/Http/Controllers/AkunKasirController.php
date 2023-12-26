@@ -5,30 +5,56 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use App\Models\AkunKasir;
 
 class AkunKasirController extends Controller
 {
     public function login(Request $request)
     {
-        $request->validate([
-            'username_kasir' => 'required',
-            'password_kasir' => 'required|string',
-        ], [
-            'username_kasir.required' => 'Silahkan mengisi username terlebih dahulu',
-            'password_kasir.required' => 'Silahkan mengisi password terlebih dahulu',    
-        ]
-        );
+        // $request->validate([
+        //     'username_kasir' => 'required',
+        //     'password_kasir' => 'required|string',
+        // ], [
+        //     'username_kasir.required' => 'Silahkan mengisi username terlebih dahulu',
+        //     'password_kasir.required' => 'Silahkan mengisi password terlebih dahulu',    
+        // ]
+        // );
 
-        $kasir = AkunKasir::where('username_kasir', $request->username_kasir)->first();
+        // $kasir = AkunKasir::where('username_kasir', $request->username_kasir)->first();
 
-        if (!$kasir || !Hash::check($request->password_kasir, $kasir->password_kasir)) {
-            return back()->with('error', 'Username or password invalid');
-        }
+        // if (!$kasir || !Hash::check($request->password_kasir, $kasir->password_kasir)) {
+        //     return back()->with('error', 'Username or password invalid');
+        // }
         
-        $request->session()->regenerate();
-        return redirect()->route('kasir.confirm');
+        // $request->session()->regenerate();
+        // return redirect()->route('kasir.confirm');
+        $credentials = $request->validate([
+            'username_kasir' => 'required',
+            'password_kasir' => 'required',
+        ]);
+
+        if (Auth::guard('kasir')->attempt(
+            ['username_kasir' => $credentials['username_kasir'], 'password' => $credentials['password_kasir']]
+        )) {
+            $request->session()->regenerate();
+    
+            return redirect()->intended('/menuKasir');  
+        }      
+
+        return back()->with('error', 'Invalid username or password');
     }
+
+    public function logout(Request $request)
+        {
+            Auth::guard('kasir')->logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect('/');
+        }
 
     public function showLoginForm()
     {

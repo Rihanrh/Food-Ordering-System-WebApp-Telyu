@@ -18,5 +18,10 @@ class TenantSeeder extends Seeder
             'username_tenant' => 'test',
             'password_tenant' => bcrypt('test1'),
         ]);
+        AkunTenant::create([
+            'nama_tenant' => 'Lia',
+            'username_tenant' => 'lia_tenant',
+            'password_tenant' => bcrypt('test'),
+        ]);
     }
 }
