@@ -13,7 +13,8 @@ class PesananTenantController extends Controller
      */
     public function index()
     {
-        //
+        $pesanan_tenants = PesananTenant::all();
+        return view('tenantListPesanan', compact('pesanan_tenants'));
     }
 
     /**

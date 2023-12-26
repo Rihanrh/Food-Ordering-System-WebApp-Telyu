@@ -141,7 +141,7 @@
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"></a>
         <ul class="nav nav-pills flex-column mb-auto">
           <li>
-            <a href="Confirm.html" class="nav-link ">
+            <a href="/pesananKasir" class="nav-link ">
               <i class="bi bi-receipt" style="font-size: 2rem;"></i>
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#bi bi-receipt" />
@@ -151,7 +151,7 @@
           </li>
 
           <li>
-            <a href="menu.html" class="nav-link text-white">
+            <a href="/menuKasir" class="nav-link text-white">
               <i class="bi bi-cup-straw" style="font-size: 2rem;"></i>
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#speedometer2" />
@@ -161,7 +161,7 @@
           </li>
 
           <li>
-            <a href="report.html" class="nav-link text-white">
+            <a href="/reportKasir" class="nav-link text-white">
               <i class="bi bi-journal-text" style="font-size: 2rem;"></i>
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#table" />
@@ -176,7 +176,6 @@
         <!--Dropdown-->
         <div class="dropdown">
           <a href="#Syalala" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="assets/pp kasir.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
             <strong>{{ auth()->guard('kasir')->user()->nama_kasir }}</strong>
           </a>
           <ul class="dropdown-menu  text-small shadow" aria-labelledby="dropdownUser1">

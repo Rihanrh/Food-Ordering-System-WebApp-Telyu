@@ -5,6 +5,10 @@ use App\Http\Controllers\AkunKasirController;
 use App\Http\Controllers\AkunTenantController;
 use App\Http\Controllers\MenuKasirController;
 use App\Http\Controllers\MenuTenantController;
+use App\Http\Controllers\PesananKasirController;
+use App\Http\Controllers\PesananTenantController;  
+use App\Http\Controllers\ReportKasirController;
+use App\Http\Controllers\ReportTenantController;
 
 
 /*
@@ -42,4 +46,6 @@ Route::post('/tenant-keluar', [AkunTenantController::class, 'logout'])->name('te
 // Route::get('/', [MenuTenantController::class, 'index']);
 Route::resource('/menuTenant', MenuTenantController::class);
 Route::resource('/menuKasir', MenuKasirController::class);
-
+Route::resource('/pesananKasir', PesananKasirController::class);
+Route::resource('/pesananTenant', PesananTenantController::class);
+Route::resource('/reportKasir', ReportKasirController::class);

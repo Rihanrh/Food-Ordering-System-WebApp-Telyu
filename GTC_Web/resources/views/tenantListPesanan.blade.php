@@ -118,7 +118,7 @@
           <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"></a>
           <ul class="nav nav-pills flex-column mb-auto">
             <li>
-              <a href="#" class="nav-link ">
+              <a href="/pesananTenant" class="nav-link ">
                   <i class="bi bi-receipt" style="font-size: 2rem;" ></i>
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#bi bi-receipt"/></svg>
                 Pesanan
@@ -126,7 +126,7 @@
             </li>
 
             <li>
-              <a href="tenantMenu.html" class="nav-link text-white">
+              <a href="/menuTenant" class="nav-link text-white">
                 <i class="bi bi-egg-fried"  style="font-size: 2rem;"></i>
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                 Menu
@@ -139,11 +139,15 @@
           <!--Dropdown-->
           <div class="dropdown">
             <a href="#Syalala" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="assets/Nasi Goreng.jpeg" alt="" width="32" height="32" class="rounded-circle me-2">
-              <strong>Rasya</strong>
+              <strong>{{ auth()->guard('tenant')->user()->nama_tenant }}</strong>
             </a>
             <ul class="dropdown-menu  text-small shadow" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="landpg.html">Keluar</a></li>
+              <li>
+                <form action="{{ route('tenant.keluar') }}" method="POST">
+                  @csrf
+                  <button type="submit" class="dropdown-item" href="landpg.html">Keluar</button>
+                </form>
+              </li>
           </ul>
           </div>
         </div>

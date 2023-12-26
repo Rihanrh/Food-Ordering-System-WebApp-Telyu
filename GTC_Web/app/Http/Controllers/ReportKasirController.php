@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PesananKasir;
-use App\Http\Requests\StorePesananKasirRequest;
-use App\Http\Requests\UpdatePesananKasirRequest;
+use App\Models\ReportKasir;
+use Illuminate\Http\Request;
 
-class PesananKasirController extends Controller
+class ReportKasirController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pesanan_kasirs = PesananKasir::all();
-        return view('Confirm', compact('pesanan_kasirs'));
+        return view('reportKasir');
     }
 
     /**
@@ -28,7 +26,7 @@ class PesananKasirController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePesananKasirRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -36,7 +34,7 @@ class PesananKasirController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PesananKasir $pesananKasir)
+    public function show(ReportKasir $reportKasir)
     {
         //
     }
@@ -44,7 +42,7 @@ class PesananKasirController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PesananKasir $pesananKasir)
+    public function edit(ReportKasir $reportKasir)
     {
         //
     }
@@ -52,7 +50,7 @@ class PesananKasirController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePesananKasirRequest $request, PesananKasir $pesananKasir)
+    public function update(Request $request, ReportKasir $reportKasir)
     {
         //
     }
@@ -60,7 +58,7 @@ class PesananKasirController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PesananKasir $pesananKasir)
+    public function destroy(ReportKasir $reportKasir)
     {
         //
     }

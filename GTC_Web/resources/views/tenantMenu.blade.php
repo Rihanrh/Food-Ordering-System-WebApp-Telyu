@@ -143,7 +143,7 @@
           <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"></a>
           <ul class="nav nav-pills flex-column mb-auto">
             <li>
-              <a href="tenantListPesanan.html" class="nav-link ">
+              <a href="/pesananTenant" class="nav-link ">
                   <i class="bi bi-receipt" style="font-size: 2rem;" ></i>
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#bi bi-receipt"/></svg>
                 Pesanan
@@ -151,7 +151,7 @@
             </li>
 
             <li>
-              <a href="#" class="nav-link text-white">
+              <a href="/menuTenant" class="nav-link text-white">
                   <i class="bi bi-egg-fried"  style="font-size: 2rem;"></i>
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                 Menu
