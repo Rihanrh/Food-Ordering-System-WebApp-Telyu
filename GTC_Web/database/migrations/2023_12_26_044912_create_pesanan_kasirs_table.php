@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pesanan_tenants', function (Blueprint $table) {
+        Schema::create('pesanan_kasirs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idTenant')->constrained('akun_tenants','id')->onDelete('cascade');
-            $table->foreignId('idMenu')->constrained('menu_tenants','id')->onDelete('cascade');
+            $table->foreignId('idKasir')->constrained('akun_kasirs','id')->onDelete('cascade');
+            $table->foreignId('idMenu')->constrained('menu_kasirs','id')->onDelete('cascade');
             $table->integer('quantity');
             $table->integer('totalHarga');
             $table->string('statusPesanan');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pesanan_tenants');
+        Schema::dropIfExists('pesanan_kasirs');
     }
 };
