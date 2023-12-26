@@ -39,13 +39,14 @@ class MenuTenantController extends Controller
 
         ]);
         $menu = new MenuTenant();
-        $menu->fotoProduk = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $menu->namaProduk = $data['tambahNamaProduk'];
+        $menu->fotoProduk = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '-' . $menu->namaProduk . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $menu->hargaProduk = $data['tambahHargaProduk'];
         $menu->stokProduk = $data['tambahStokProduk'];
         $menu->idTenant = auth()->guard('tenant')->id();
 
-        $request->tambahFotoProduk->move(public_path('file'), $request->tambahFotoProduk->getClientOriginalName());
+        $request->tambahFotoProduk->move(public_path('file'), $menu->fotoProduk);
+        // $request->tambahFotoProduk->getClientOriginalName()
 
         $menu->save();
         return redirect('/menuTenant')->with('success','Menu Telah Ditambahkan');

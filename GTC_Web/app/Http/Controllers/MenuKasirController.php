@@ -39,13 +39,13 @@ class MenuKasirController extends Controller
             'tambahStokProduk'=> 'required|numeric',
         ]);
         $kasir = new MenuKasir();
-        $kasir->foto = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $kasir->nama_produk = $data['tambahNamaProduk'];
+        $kasir->foto = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '-' . $kasir->nama_produk . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $kasir->harga_produk = $data['tambahHargaProduk'];
         $kasir->stok_produk = $data['tambahStokProduk'];
         $kasir->idKasir = auth()->guard('kasir')->id();
 
-        $request->tambahFotoProduk->move(public_path('file'), $request->tambahFotoProduk->getClientOriginalName());
+        $request->tambahFotoProduk->move(public_path('file'), $kasir->foto);
         $kasir->save();
         return redirect('/menuKasir')->with('success','Produk Telah Ditambahkan');
     }
