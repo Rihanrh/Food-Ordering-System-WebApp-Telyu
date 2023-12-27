@@ -23,7 +23,7 @@ use App\Http\Controllers\ReportTenantController;
 */
 
 Route::get('/', function () {
-    return view('landpg');
+    return view('tenantListPesanan');
 });
 
 // Routes for Kasir
