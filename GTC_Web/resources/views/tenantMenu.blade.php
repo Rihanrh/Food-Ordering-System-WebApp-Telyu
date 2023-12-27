@@ -378,7 +378,7 @@
           button.addEventListener('click', function(){
             const id = button.getAttribute('data-id');
             suntingForm.action = `/menuTenant/${id}`;
-            
+
             fetch(`/menuTenant/${id}`)
               .then(response => {
                 if (!response.ok) {

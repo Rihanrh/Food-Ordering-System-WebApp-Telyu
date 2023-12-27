@@ -56,9 +56,9 @@ class MenuTenantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MenuTenant $menu)
+    public function show(MenuTenant $menu, string $id)
     {
-        $menu = MenuTenant::where('id', $menu->id)->first();
+        $menu = MenuTenant::where('id', $id)->first();
 
         if ($menu){
             return response()->json([
