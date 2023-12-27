@@ -7,13 +7,11 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/tenant.css">
-    <link href="sidebars.css" rel="stylesheet">
-    <link rel="stylesheet" href="virtual-select.min.css">
+    <link rel="stylesheet" href="css/virtual-select.min.css">
 
     <!-- JS + JS Sidebar -->
-    <script src="tenant.js"></script>
+    <script src="js/tenant.js"></script>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="sidebars.js"></script>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -158,10 +156,7 @@
         <!--Nav Tab-->
         <ul class="nav nav-underline nav-fill ms-3 mb-3" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="navSlide" data-bs-toggle="tab" href="#tabPesananMasuk">Pesanan Masuk</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="navSlide" data-bs-toggle="tab" href="#tabMenungguPembayaran">Menunggu Pembayaran</a>
+            <a class="nav-link active" id="navSlide" data-bs-toggle="tab" href="#tabMenungguPembayaran">Menunggu Pembayaran</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="navSlide" data-bs-toggle="tab" href="#tabPesananDiproses">Dalam Proses</a>
@@ -174,48 +169,8 @@
         <!--Nav Tab Content-->
         <div class="tab-content">
 
-          <!--Nav Tab Pesanan Masuk-->
-          <div id="tabPesananMasuk" class="tab-pane active">
-            <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              <div class="col">
-                <div class="card bg-light-subtle mt-4">
-                  <div class="card-body">
-                    <div class="text-section mb-0 lh-1">
-                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : R466</h5>
-                        <p class="card-text fs-6 ">1x Nasi Goreng, 1x Es Teh</p>
-                        <p class="card-text fs-6 text-danger fw-semibold" >Rp50,000</p>
-                        <p class="card-text fs-6 fw-semibold" >QRIS</p>
-                        <p class="card-text text-end fs-6 fw-semibold">Kantin Rasya</p>
-                    </div>
-                    <div class="d-grid gap-2 d-md-block mt-3 text-end">
-                        <button class="btn btn-outline-danger btn-block fw-medium" id="buttonTolak" data-bs-toggle="modal" data-bs-target="#modalTolakPesanan">Tolak</button>
-                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalPesananDiterima" >Terima</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card bg-light-subtle mt-4">
-                  <div class="card-body">
-                    <div class="text-section mb-0 lh-1">
-                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : R465</h5>
-                        <p class="card-text fs-6 ">1x Nasi Goreng</p>
-                        <p class="card-text fs-6 text-danger fw-semibold" >Rp15,000</p>
-                        <p class="card-text fs-6 fw-semibold" >Tunai</p>
-                        <p class="card-text text-end fs-6 fw-semibold">Kantin Rasya</p>
-                    </div>
-                    <div class="d-grid gap-2 d-md-block mt-3 text-end">
-                        <button class="btn btn-outline-danger btn-block fw-medium" id="buttonTolak" data-bs-toggle="modal" data-bs-target="#modalTolakPesanan">Tolak</button>
-                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalPesananDiterima">Terima</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!--Nav Tab Menunggu Pembayaran-->
-          <div id="tabMenungguPembayaran" class="tab-pane">
+          <div id="tabMenungguPembayaran" class="tab-pane active">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
               <div class="col">
                 <div class="card bg-light-subtle mt-4">
@@ -405,21 +360,17 @@
               <!-- Modal body -->
               <div class="modal-body">
                 <!--Add Pesanan-->
-                <p class="text-danger fs-5">Menu : </p>
-                <select multiple name="native-select" placeholder="Native Select" data-search="false" data-silent-initial-value-set="true" id="selectMenu" >
-                  <option value="1" >Chili Salt Chicken</option>
-                  <option value="2">Bubur Ayam</option>
-                  <option value="3" selected>Batagor</option>
-                  <option value="4" selected>Nasi Goreng</option>
-                  <option value="5" selected>Kwetiau Goreng</option>
-                </select>
+                <button id="tambah-menu" type="button" class="btn btn-danger" >Tambahkan Menu</button>
+                <div id="dropdown">
+                </div>
 
-                <p class="text-danger fs-5 mt-3">Metode Pembayaran : </p>
-                <select name="native-select" placeholder="Native Select" data-search="false" data-silent-initial-value-set="true" id="selectPaymentMethod">
+                <p class="text-danger fs-5 mt-3 ms-2">Metode Pembayaran : </p>
+                <select class='form-select'name='native-select'placeholder='Native Select'data-search='false'data-silent-initial-value-set='true'>
                   <option value="1" >QRIS</option>
                   <option value="2">Tunai</option>
                 </select>
-              </div>
+                </div>
+                
         
               <!-- Modal footer -->
               <div class="modal-footer">
@@ -439,15 +390,35 @@
     </main>
       
 
-    <script src="virtual-select.min.js"></script>
+    <script src="js/virtual-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-      // Multi Select untuk tambah menu ke dalam pesanan
-      VirtualSelect.init({ 
-        ele: '#selectMenu' 
-      });
       VirtualSelect.init({ 
         ele: '#selectPaymentMethod' 
       });
+      $(document).ready(function() {
+      // Event handler untuk tombol "tambah menu"
+      $("#tambah-menu").click(function() {
+        // Buat dua dropdown
+        var dropdown = $("<select class='form-select mt-3 'name='native-select'placeholder='Native Select'data-search='false'data-silent-initial-value-set='true' id='id'></select>");
+
+        // Isi dropdown pertama dengan data multi select
+        dropdown.append("<option value='1' >Chili Salt Chicken</option>");
+        dropdown.append("<option value='2'>Bubur Ayam</option>");
+        dropdown.append("<option value='3'>Batagor</option>");
+        dropdown.append("<option value='4' >Chili Salt Chicken</option>");
+        dropdown.append("<option value='5'>Bubur Ayam</option>");
+        dropdown.append("<option value='6'>Batagor</option>");
+        dropdown.append("<option value='7'>Batagor</option>");
+        dropdown.append("<option value='8' >Chili Salt Chicken</option>");
+        dropdown.append("<option value='9'>Bubur Ayam</option>");
+        dropdown.append("<option value='10'>Batagor</option>");
+
+        // Letakkan kedua dropdown sejajar
+        $("#dropdown").append(dropdown);
+      });
+    });
+   
     </script>
         
   </body>

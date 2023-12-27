@@ -19,7 +19,7 @@ use App\Http\Controllers\MenuTenantController;
 */
 
 Route::get('/', function () {
-    return view('landpg');
+    return view('tenantListPesanan');
 });
 
 // Routes for Kasir
