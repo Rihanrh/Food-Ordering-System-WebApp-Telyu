@@ -110,15 +110,15 @@
           <!--Nav Tab Menunggu Pembayaran-->
           <div id="tabMenungguPembayaran" class="tab-pane active">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananMenunggu as $idPesanan => $pesananDetails)
+              @foreach ($groupedPesananMenunggu as $idPesananKasir => $pesananDetails)
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                         <p class="card-text fs-6">
                         @foreach ($pesananDetails as $detail)
-                          {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                          {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                         @endforeach
                         </p>
                         <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
@@ -353,7 +353,7 @@
             success: function (data) {
                 // Iterate over the menu options and append them to the dropdown
                 $.each(data, function (index, option) {
-                    dropdown.append("<option value='" + option.id + "'>" + option.namaProduk + "</option>");
+                    dropdown.append("<option value='" + option.id + "'>" + option.nama_produk + "</option>");
                 });
             },
             error: function (error) {
