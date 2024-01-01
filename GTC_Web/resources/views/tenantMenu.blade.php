@@ -189,7 +189,6 @@
               <td class="table-danger">Foto Produk</td>
               <td class="table-danger">Nama Produk</td>
               <td class="table-danger">Harga</td>
-              <td class="table-danger">Stok</td>
               <td class="table-danger">Sunting / Hapus </td>
             </tr>
           </thead>
@@ -201,7 +200,6 @@
               <td><img src="file/{{$menu->fotoProduk}}" alt=""width="10%" >  </td>
               <td>{{$menu->namaProduk}}</td>
               <td>{{$menu->hargaProduk}}</td>
-              <td>{{$menu->stokProduk}}</td>
               <td>
                 <div class="col-auto" style="margin-left: 18%;">
                   <button type="button" class="btn  mb-0" id="buttonSunting" data-id="{{$menu->id}}" data-bs-toggle="modal" data-bs-target="#popupsuntingmenu" style="background-color: white; color: rgba(211, 36, 43, 1); border: 1px solid rgba(211, 36, 43, 1);">Sunting</button>
@@ -247,13 +245,6 @@
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <label for="stokProduk" class="col-sm-4 col-form-label">Stok Produk</label>
-                <div class="col-sm">
-                  <input type="text" class="form-control" id="stokProduk" name="tambahStokProduk">
-                </div>
-              </div>
-
               <div class="modal-footer">
                 <button type="submit" class="btn mb-0 " id="buttonTambahkan" style="background-color:rgba(211, 36, 43, 1); color: white; margin-left: 80%;">Tambahkan</button>
               </div>
@@ -292,13 +283,6 @@
                   <label for="suntingHargaProduk" class="col-sm-4 col-form-label">Harga Produk(Rp)</label>
                   <div class="col-sm">
                   <input type="number" class="form-control" id="suntingHargaProduk" name="suntingHargaProduk">
-                  </div>
-                </div>
-                
-                <div class="row mb-3">
-                  <label for="suntingStokProduk" class="col-sm-4 col-form-label">stok Produk</label>
-                  <div class="col-sm">
-                    <input type="number" class="form-control" name="suntingStokProduk" id="suntingStokProduk">
                   </div>
                 </div>
               </div>
@@ -389,7 +373,6 @@
               .then(data => {
                 document.getElementById('suntingNamaProduk').value = data.namaproduk;
                 document.getElementById('suntingHargaProduk').value = data.hargaproduk;
-                document.getElementById('suntingStokProduk').value = data.stokproduk;
               })
           });
         });

@@ -3,15 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReportKasir;
+use App\Models\PesananKasir;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class ReportKasirController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $reportData = PesananKasir::where('statusPesanan', 'Pesanan Selesai')
+    //         ->groupBy('idPesananKasir', 'metodePembayaran')
+    //         ->select('idPesananKasir', 'metodePembayaran', \DB::raw('SUM(totalHarga) as totalHarga'), \DB::raw('MAX(created_at) as waktuPenjualan'))
+    //         ->get();
+
+    //     return view('reportKasir', ['reportData' => $reportData]);
+    // }
+
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = PesananKasir::select('idPesananKasir', DB::raw('SUM(totalHarga) as totalHarga'), 'metodePembayaran')
+                ->where('statusPesanan', 'Pesanan Selesai')
+                ->groupBy('idPesananKasir', 'metodePembayaran');
+
+            if ($request->filled('startDate') && $request->filled('endDate')) {
+                $data = $data->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            }
+
+            $result = DataTables::of($data)
+                ->addColumn('waktuPenjualan', function ($row) {
+                    // Retrieve the first created_at within the grouped records
+                    return PesananKasir::where('idPesananKasir', $row->idPesananKasir)
+                        ->orderBy('created_at', 'asc')
+                        ->value('created_at')
+                        ->format('Y-m-d H:i:s');
+                })
+                ->addIndexColumn()
+                ->make(true);
+
+            return $result;
+        }
+
         return view('reportKasir');
     }
 

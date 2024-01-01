@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('nama_produk');
             $table->integer('harga_produk');
-            $table->integer('stok_produk');
             $table->foreignId('idKasir')->constrained('akun_kasirs','id')->onDelete('cascade');
             $table->timestamps();
         });

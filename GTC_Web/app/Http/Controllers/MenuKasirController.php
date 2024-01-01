@@ -14,8 +14,9 @@ class MenuKasirController extends Controller
      */
     public function index()
     {
-        $kasirs = MenuKasir::where('idKasir', auth()->guard('kasir')->id())->orderBy('id','asc')->paginate(2);
+        //$kasirs = MenuKasir::where('idKasir', auth()->guard('kasir')->id())->orderBy('id','asc')->paginate(2);
         // $kasirs = Kasir::paginate(2);
+        $kasirs = MenuKasir::where('idKasir', auth()->guard('kasir')->id())->get();
         return view("menu", ['kasirs'=>$kasirs]);
     }
 
@@ -36,13 +37,11 @@ class MenuKasirController extends Controller
             'tambahFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
             'tambahNamaProduk'=>'required',
             'tambahHargaProduk'=> 'required|numeric',
-            'tambahStokProduk'=> 'required|numeric',
         ]);
         $kasir = new MenuKasir();
         $kasir->nama_produk = $data['tambahNamaProduk'];
         $kasir->foto = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '-' . $kasir->nama_produk . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $kasir->harga_produk = $data['tambahHargaProduk'];
-        $kasir->stok_produk = $data['tambahStokProduk'];
         $kasir->idKasir = auth()->guard('kasir')->id();
 
         $request->tambahFotoProduk->move(public_path('file'), $kasir->foto);
@@ -62,7 +61,6 @@ class MenuKasirController extends Controller
             return response()->json([
                 'namaproduk'=>$kasir->nama_produk,
                 'hargaproduk'=>$kasir->harga_produk,
-                'stokproduk'=>$kasir->stok_produk
             ]) ;
         }
 
@@ -89,13 +87,11 @@ class MenuKasirController extends Controller
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
             'suntingNamaProduk'=>'required',
             'suntingHargaProduk'=> 'required|numeric',
-            'suntingStokProduk'=> 'required|numeric',
         ]);
 
         $file = public_path('file/'.$kasirs->foto);
         $kasirs->nama_produk = $data['suntingNamaProduk'];
         $kasirs->harga_produk = $data['suntingHargaProduk'];
-        $kasirs->stok_produk = $data['suntingStokProduk'];
         $kasirs->foto = isset($data['suntingFotoProduk']) ? pathinfo($data['suntingFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['suntingFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION) : $kasirs->foto;
     
         if($request->file('suntingFotoProduk')){

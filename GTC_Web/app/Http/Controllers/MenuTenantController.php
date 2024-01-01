@@ -35,14 +35,11 @@ class MenuTenantController extends Controller
             'tambahFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
             'tambahNamaProduk'=>'required',
             'tambahHargaProduk'=> 'required|numeric',
-            'tambahStokProduk'=> 'required|numeric',
-
         ]);
         $menu = new MenuTenant();
         $menu->namaProduk = $data['tambahNamaProduk'];
         $menu->fotoProduk = pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '-' . $menu->namaProduk . '.' . pathinfo($data['tambahFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION);
         $menu->hargaProduk = $data['tambahHargaProduk'];
-        $menu->stokProduk = $data['tambahStokProduk'];
         $menu->idTenant = auth()->guard('tenant')->id();
 
         $request->tambahFotoProduk->move(public_path('file'), $menu->fotoProduk);
@@ -64,7 +61,6 @@ class MenuTenantController extends Controller
             return response()->json([
                 'namaproduk'=>$menu->namaProduk,
                 'hargaproduk'=>$menu ->hargaProduk,
-                'stokproduk'=>$menu ->stokProduk,
             ]) ;
 
         }
@@ -91,15 +87,12 @@ class MenuTenantController extends Controller
             'suntingFotoProduk'=> 'mimes:jpg,jpeg,png|max:5000',
             'suntingNamaProduk'=>'required',
             'suntingHargaProduk'=> 'required|numeric',
-            'suntingStokProduk'=> 'required|numeric',
-
         ]);
 
         $file = public_path('file/' . $menus->fotoProduk);
 
         $menus->namaProduk = $data['suntingNamaProduk'];
         $menus->hargaProduk = $data['suntingHargaProduk'];
-        $menus->stokProduk = $data['suntingStokProduk'];
         $menus->fotoProduk = isset($data['suntingFotoProduk']) ? pathinfo($data['suntingFotoProduk']->getClientOriginalName(), PATHINFO_FILENAME) . '.' . pathinfo($data['suntingFotoProduk']->getClientOriginalName(), PATHINFO_EXTENSION) : $menus->fotoProduk;
 
         if($request->file('suntingFotoProduk')){
