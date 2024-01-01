@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('menu_tenants', function (Blueprint $table) {
             $table->id();
-            $table->string('fotoProduk');
+            $table->string('fotoProduk')->nullable();
             $table->string('namaProduk');
             $table->string('hargaProduk');
             $table->string('stokProduk');

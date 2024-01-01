@@ -11,4 +11,8 @@ class MenuKasir extends Model
     use HasFactory;
     protected $fillable = ["foto","nama_produk","harga_produk","stok_produk"];
     protected $table = 'menu_kasirs';
+
+    public function kasir(){
+        return $this->belongsTo(AkunKasir::class,'id','idKasir');
+    }
 }

@@ -5,7 +5,7 @@
     use App\Models\AkunTenant;
     use App\Http\Requests\StoreTenantRequest;
     use App\Http\Requests\UpdateTenantRequest;
-
+  
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\Auth;

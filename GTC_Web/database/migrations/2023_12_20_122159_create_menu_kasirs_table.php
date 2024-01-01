@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('menu_kasirs', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->string('nama_produk');
             $table->integer('harga_produk');
             $table->integer('stok_produk');

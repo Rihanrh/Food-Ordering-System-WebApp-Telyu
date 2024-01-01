@@ -14,10 +14,10 @@ class PesananTenant extends Model
     protected $table = 'pesanan_tenants';
 
     public function tenant(){
-        return $this->belongsTo(AkunTenant::class,'id','idTenant');
+        return $this->belongsTo(AkunTenant::class, 'idTenant', 'id');
     }
 
     public function menu(){
-        return $this->hasMany(MenuTenant::class,'id','idMenu');
+        return $this->belongsTo(MenuTenant::class,'idMenu','id');
     }
 }
