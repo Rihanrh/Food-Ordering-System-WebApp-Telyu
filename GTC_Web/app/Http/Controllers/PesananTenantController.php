@@ -18,6 +18,7 @@ class PesananTenantController extends Controller
         $pesanan_menunggu = PesananTenant::with('tenant')
             ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
             ->where('statusPesanan', 'Menunggu Konfirmasi Pembayaran')
+            ->where('idTenant', auth()->guard('tenant')->id())
             ->orderBy('idPesanan')
             ->get();
 
@@ -26,6 +27,7 @@ class PesananTenantController extends Controller
         $pesanan_diproses = PesananTenant::with('tenant')
             ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
             ->where('statusPesanan', 'Pesanan Dalam Proses')
+            ->where('idTenant', auth()->guard('tenant')->id())
             ->orderBy('idPesanan')
             ->get();
 
@@ -34,6 +36,7 @@ class PesananTenantController extends Controller
         $pesanan_selesai = PesananTenant::with('tenant')
             ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
             ->where('statusPesanan', 'Pesanan Selesai')
+            ->where('idTenant', auth()->guard('tenant')->id())
             ->orderBy('idPesanan')
             ->get();
 
@@ -122,7 +125,7 @@ class PesananTenantController extends Controller
 
     public function getMenu()
     {
-        $menu_tenants = MenuTenant::select('id', 'namaProduk')->get();
+        $menu_tenants = MenuTenant::select('id', 'namaProduk')->where('idTenant', auth()->guard('tenant')->id())->get();
         return response()->json($menu_tenants);
     }
 

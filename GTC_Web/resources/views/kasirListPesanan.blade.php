@@ -123,15 +123,9 @@
                         </p>
                         <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                         <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
-                        <p class="card-text text-end fs-6 fw-semibold">
-                          {{ $pesananDetails->first()-kasir->nama_kasir }}
-                        </p>
                       </div>
                       <div class="d-grid mt-3 text-canter">
                         <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaran"
-                        @if ($pesananDetails->first()->metodePembayaran == 'Tunai')
-                        disabled
-                        @endif
                         >Konfirmasi Pembayaran</button>
                       </div>
                     </div>
@@ -169,7 +163,7 @@
                 </div>
               @endforeach
             </div>
-          </div>
+          </div> 
 
           <!--Nav Tab Pesanan Selesai-->
           <div id="tabPesananSelesai" class="tab-pane ">
@@ -199,7 +193,7 @@
             </div>
           </div>
 
-        </div>
+        </div> 
 
         <!--Modal Pesanan Ditolak-->
         <div class="modal" id="modalTolakPesanan">
