@@ -247,7 +247,7 @@
         
               <!-- Modal footer -->
               @if ($groupedPesananMenunggu->isNotEmpty())
-                <form action="{{ route('pesananKasir.konfirmasiPembayaran', ['id' => $groupedPesananMenunggu->first()->first()->idPesanan]) }}" method="POST">
+                <form action="{{ route('pesananKasir.konfirmasiPembayaranKasir', ['id' => $groupedPesananMenunggu->first()->first()->idPesanan]) }}" method="POST">
               @endif
                 @csrf
                 <div class="modal-footer">

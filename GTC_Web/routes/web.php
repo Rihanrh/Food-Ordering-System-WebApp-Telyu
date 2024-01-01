@@ -57,3 +57,4 @@ Route::post('/pesanan-selesai/{id}', [PesananTenantController::class, 'pesananSe
 
 // Route for Pesanan Kasir
 Route::get('/get-menuKasir', [PesananKasirController::class, 'getMenuKasir']);
+Route::post('/konfirmasi-pembayaran/{id}', [PesananKasirController::class, 'konfirmasiPembayaran'])->name('pesananKasir.konfirmasiPembayaran');

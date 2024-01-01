@@ -18,6 +18,6 @@ class PesananKasir extends Model
     }
 
     public function menu(){
-        return $this->hasMany(MenuKasir::class,'idMenu','id');
+        return $this->belongsTo(MenuKasir::class,'idMenu','id');
     }
 }
