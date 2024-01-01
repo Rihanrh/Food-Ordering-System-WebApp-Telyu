@@ -125,13 +125,39 @@
                         <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
                       </div>
                       <div class="d-grid mt-3 text-canter">
-                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaran"
+                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaranKasir"
                         >Konfirmasi Pembayaran</button>
                       </div>
                     </div>
                   </div>
                 </div>
               @endforeach
+              @if($groupedPesananTenantMenunggu)
+                @foreach ($groupedPesananTenantMenunggu as $idPesanan => $pesananDetails)
+                  <div class="col">
+                    <div class="card bg-light-subtle mt-4">
+                      <div class="card-body">
+                        <div class="text-section mb-0 lh-1">
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <p class="card-text fs-6">
+                          @foreach ($pesananDetails as $detail)
+                            {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                          @endforeach
+                          </p>
+                          <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
+                          <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
+                          <p class="card-text text-end fs-6 fw-semibold">
+                            {{ $pesananDetails->first()->tenant->nama_tenant }}
+                          </p>
+                        </div>
+                        <div class="d-grid mt-3 text-canter">
+                          <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaranTenant">Konfirmasi Pembayaran</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+              @endif
             </div>
           </div>
 
@@ -234,8 +260,8 @@
           </div>
         </div>
 
-        <!--Modal Konfirmasi Pembayaran-->
-        <div class="modal" id="modalKonfirmasiPembayaran">
+        <!--Modal Konfirmasi Pembayaran Kasir-->
+        <div class="modal" id="modalKonfirmasiPembayaranKasir">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
         
@@ -253,11 +279,35 @@
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batalkan</button>
                   <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal">Ya</button>
                 </div>
-                @if ($groupedPesananMenunggu->isNotEmpty())
-              </form>
-                @endif
+              @if ($groupedPesananMenunggu->isNotEmpty())
+                </form>
+              @endif
+            </div>
+          </div>
+        </div>
 
+        <!--Modal Konfirmasi Pembayaran Tenant-->
+        <div class="modal" id="modalKonfirmasiPembayaranTenant">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
         
+              <!-- Modal body -->
+              <div class="modal-body">
+                <p class="fs-5 text-danger fw-semibold">Konfirmasi Pembayaran ?</p>
+              </div>
+        
+              <!-- Modal footer -->
+              @if ($groupedPesananTenantMenunggu->isNotEmpty())
+                <form action="{{ route('pesananTenant.konfirmasiPembayaranTenant', ['id' => $groupedPesananTenantMenunggu->first()->first()->idPesanan]) }}" method="POST">
+              @endif
+                @csrf
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batalkan</button>
+                  <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal">Ya</button>
+                </div>
+              @if ($groupedPesananTenantMenunggu->isNotEmpty())
+                </form>
+              @endif
             </div>
           </div>
         </div>

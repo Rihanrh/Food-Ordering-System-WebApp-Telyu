@@ -136,7 +136,7 @@ class PesananTenantController extends Controller
             $p->statusPesanan = 'Pesanan Dalam Proses';
             $p->save();
         }
-        return redirect('/pesananTenant')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 
     public function pesananSelesai(string $id)
@@ -146,6 +146,6 @@ class PesananTenantController extends Controller
             $p->statusPesanan = 'Pesanan Selesai';
             $p->save();
         }
-        return redirect('/pesananTenant')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 }

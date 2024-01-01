@@ -43,7 +43,16 @@ class PesananKasirController extends Controller
 
         $groupedPesananSelesai = $pesanan_selesai->groupBy('idPesananKasir');
 
-        return view('kasirListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai'));
+        $pesanan_tenant_menunggu = PesananTenant::with('tenant')
+            ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
+            ->where('statusPesanan', 'Menunggu Konfirmasi Pembayaran')
+            ->where('metodePembayaran', 'Tunai')
+            ->orderBy('idPesanan')
+            ->get();
+
+        $groupedPesananTenantMenunggu = $pesanan_tenant_menunggu->groupBy('idPesanan');
+
+        return view('kasirListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai', 'groupedPesananTenantMenunggu'));
 }
 
 
@@ -137,7 +146,7 @@ class PesananKasirController extends Controller
             $p->statusPesanan = 'Pesanan Dalam Proses';
             $p->save();
         }
-        return redirect('/pesananKasir')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 
     public function pesananSelesaiKasir(string $id)
@@ -147,6 +156,6 @@ class PesananKasirController extends Controller
             $p->statusPesanan = 'Pesanan Selesai';
             $p->save();
         }
-        return redirect('/pesananKasir')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 }
