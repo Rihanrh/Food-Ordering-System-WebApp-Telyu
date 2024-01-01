@@ -14,10 +14,10 @@ class PesananKasir extends Model
     protected $table = 'pesanan_kasirs';
 
     public function kasir(){
-        return $this->belongsTo(AkunTenant::class,'id','idKasir');
+        return $this->belongsTo(AkunKasir::class,'idKasir','id');
     }
 
     public function menu(){
-        return $this->hasMany(MenuTenant::class,'id','idMenu');
+        return $this->belongsTo(MenuKasir::class,'idMenu','id');
     }
 }

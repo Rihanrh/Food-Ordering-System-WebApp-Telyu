@@ -16,32 +16,43 @@ class PesananKasirController extends Controller
      */
     public function index()
     {
-        $pesanan_menunggu = PesananTenant::with('tenant')
+        $pesanan_menunggu = PesananKasir::with('kasir')
+            ->select('idPesananKasir', 'idMenu', 'quantity', 'totalHarga', 'idKasir', 'metodePembayaran')
+            ->where('statusPesanan', 'Menunggu Konfirmasi Pembayaran')
+            ->where('idKasir', auth()->guard('kasir')->id())
+            ->orderBy('idPesananKasir')
+            ->get();
+
+        $groupedPesananMenunggu = $pesanan_menunggu->groupBy('idPesananKasir');
+
+        $pesanan_diproses = PesananKasir::with('kasir')
+            ->select('idPesananKasir', 'idMenu', 'quantity', 'totalHarga', 'idKasir', 'metodePembayaran')
+            ->where('statusPesanan', 'Pesanan Dalam Proses')
+            ->where('idKasir', auth()->guard('kasir')->id())
+            ->orderBy('idPesananKasir')
+            ->get();
+
+        $groupedPesananDiproses = $pesanan_diproses->groupBy('idPesananKasir');
+
+        $pesanan_selesai = PesananKasir::with('kasir')
+            ->select('idPesananKasir', 'idMenu', 'quantity', 'totalHarga', 'idKasir', 'metodePembayaran')
+            ->where('statusPesanan', 'Pesanan Selesai')
+            ->where('idKasir', auth()->guard('kasir')->id())
+            ->orderBy('idPesananKasir')
+            ->get();
+
+        $groupedPesananSelesai = $pesanan_selesai->groupBy('idPesananKasir');
+
+        $pesanan_tenant_menunggu = PesananTenant::with('tenant')
             ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
             ->where('statusPesanan', 'Menunggu Konfirmasi Pembayaran')
+            ->where('metodePembayaran', 'Tunai')
             ->orderBy('idPesanan')
             ->get();
 
-        $groupedPesananMenunggu = $pesanan_menunggu->groupBy('idPesanan');
+        $groupedPesananTenantMenunggu = $pesanan_tenant_menunggu->groupBy('idPesanan');
 
-
-        $pesanan_diproses = PesananTenant::with('tenant')
-            ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
-            ->where('statusPesanan', 'Pesanan Dalam Proses')
-            ->orderBy('idPesanan')
-            ->get();
-
-        $groupedPesananDiproses = $pesanan_diproses->groupBy('idPesanan');
-
-        $pesanan_selesai = PesananTenant::with('tenant')
-            ->select('idPesanan', 'idMenu', 'quantity', 'totalHarga', 'idTenant', 'metodePembayaran')
-            ->where('statusPesanan', 'Pesanan Selesai')
-            ->orderBy('idPesanan')
-            ->get();
-
-        $groupedPesananSelesai = $pesanan_selesai->groupBy('idPesanan');
-
-        return view('kasirListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai'));
+        return view('kasirListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai', 'groupedPesananTenantMenunggu'));
 }
 
 
@@ -58,7 +69,7 @@ class PesananKasirController extends Controller
      */
     public function store(Request $request)
     {
-        $id = optional(PesananKasir::orderBy('idPesanan', 'desc')->first())->idPesanan + 1 ?? 1;
+        $id = optional(PesananKasir::orderBy('idPesananKasir', 'desc')->first())->idPesananKasir + 1 ?? 1;
 
         $quantity = array();
         $menus = $request->menu;
@@ -73,14 +84,14 @@ class PesananKasirController extends Controller
 
         foreach($menus as $menu){
             $menu = MenuKasir::where('id', $menu)->first();
-            $temp_menu = PesananKasir::where('idMenu', $menu->id)->where('idPesanan', $id)->first();
+            $temp_menu = PesananKasir::where('idMenu', $menu->id)->where('idPesananKasir', $id)->first();
             if(!$temp_menu){
                 PesananKasir::create([
                     'idKasir' => auth()->guard('kasir')->id(),
                     'idMenu' => $menu->id,
-                    'idPesanan' => $id,
+                    'idPesananKasir' => $id,
                     'quantity' => $quantity[$menu->id],
-                    'totalHarga' => $quantity[$menu->id] * $menu->hargaProduk,
+                    'totalHarga' => $quantity[$menu->id] * $menu->harga_produk,
                     'metodePembayaran' => $request->metode,
                     'statusPesanan' => 'Menunggu Konfirmasi Pembayaran',
                 ]);
@@ -93,7 +104,7 @@ class PesananKasirController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PesananTenant $pesananTenant)
+    public function show(PesananKasir $pesananKasir)
     {
         //
     }
@@ -101,7 +112,7 @@ class PesananKasirController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PesananTenant $pesananTenant)
+    public function edit(PesananKasir $pesananKasir)
     {
         //
     }
@@ -109,7 +120,7 @@ class PesananKasirController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePesananTenantRequest $request, PesananTenant $pesananTenant)
+    public function update(UpdatePesananKasirRequest $request, PesananKasir $pesananKasir)
     {
         //
     }
@@ -117,34 +128,34 @@ class PesananKasirController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PesananTenant $pesananTenant)
+    public function destroy(PesananKasir $pesananKasir)
     {
         //
     }
 
-    public function getMenu()
+    public function getMenuKasir()
     {
-        $menu_kasirs = MenuKasir::select('id', 'nama_produk')->get();
+        $menu_kasirs = MenuKasir::select('id', 'nama_produk')->where('idKasir', auth()->guard('kasir')->id())->get();
         return response()->json($menu_kasirs);
     }
 
-    public function konfirmasiPembayaran(string $id)
+    public function konfirmasiPembayaranKasir(string $id)
     {
-        $pesanan = PesananTenant::where('idPesanan', $id)->get();
+        $pesanan = PesananKasir::where('idPesananKasir', $id)->get();
         foreach($pesanan as $p){
             $p->statusPesanan = 'Pesanan Dalam Proses';
             $p->save();
         }
-        return redirect('/pesananTenant')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 
-    public function pesananSelesai(string $id)
+    public function pesananSelesaiKasir(string $id)
     {
-        $pesanan = PesananTenant::where('idPesanan', $id)->get();
+        $pesanan = PesananKasir::where('idPesananKasir', $id)->get();
         foreach($pesanan as $p){
             $p->statusPesanan = 'Pesanan Selesai';
             $p->save();
         }
-        return redirect('/pesananTenant')->with('success', 'Pesanan berhasil dikonfirmasi');
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 }

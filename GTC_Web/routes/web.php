@@ -52,5 +52,10 @@ Route::resource('/reportKasir', ReportKasirController::class);
 
 // Route for Pesanan Tenant
 Route::get('/get-menu', [PesananTenantController::class, 'getMenu']);
-Route::post('/konfirmasi-pembayaran/{id}', [PesananTenantController::class, 'konfirmasiPembayaran'])->name('pesananTenant.konfirmasiPembayaran');
-Route::post('/pesanan-selesai/{id}', [PesananTenantController::class, 'pesananSelesai'])->name('pesananTenant.pesananSelesai');
+Route::post('/konfirmasi-pembayaran-tenant/{id}', [PesananTenantController::class, 'konfirmasiPembayaran'])->name('pesananTenant.konfirmasiPembayaranTenant');
+Route::post('/pesanan-selesai-tenant/{id}', [PesananTenantController::class, 'pesananSelesai'])->name('pesananTenant.pesananSelesai');
+
+// Route for Pesanan Kasir
+Route::get('/get-menuKasir', [PesananKasirController::class, 'getMenuKasir']);
+Route::post('/konfirmasi-pembayaran-kasir/{id}', [PesananKasirController::class, 'konfirmasiPembayaranKasir'])->name('pesananKasir.konfirmasiPembayaranKasir');
+Route::post('/pesanan-selesai-kasir/{id}', [PesananKasirController::class, 'pesananSelesaiKasir'])->name('pesananKasir.pesananSelesaiKasir');

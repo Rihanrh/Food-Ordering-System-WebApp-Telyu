@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('idKasir')->constrained('akun_kasirs','id')->onDelete('cascade');
             $table->foreignId('idMenu')->constrained('menu_kasirs','id')->onDelete('cascade');
+            $table->bigInteger('idPesananKasir');
             $table->integer('quantity');
             $table->integer('totalHarga');
+            $table->string('metodePembayaran');
             $table->string('statusPesanan');
             $table->timestamps();
         });

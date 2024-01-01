@@ -110,55 +110,74 @@
           <!--Nav Tab Menunggu Pembayaran-->
           <div id="tabMenungguPembayaran" class="tab-pane active">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananMenunggu as $idPesanan => $pesananDetails)
+              @foreach ($groupedPesananMenunggu as $idPesananKasir => $pesananDetails)
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                        <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                         <p class="card-text fs-6">
                         @foreach ($pesananDetails as $detail)
-                          {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                          {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                         @endforeach
                         </p>
                         <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                         <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
-                        <p class="card-text text-end fs-6 fw-semibold">
-                          {{ $pesananDetails->first()-kasir->nama_kasir }}
-                        </p>
                       </div>
                       <div class="d-grid mt-3 text-canter">
-                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaran"
-                        @if ($pesananDetails->first()->metodePembayaran == 'Tunai')
-                        disabled
-                        @endif
+                        <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaranKasir"
                         >Konfirmasi Pembayaran</button>
                       </div>
                     </div>
                   </div>
                 </div>
               @endforeach
+              @if($groupedPesananTenantMenunggu)
+                @foreach ($groupedPesananTenantMenunggu as $idPesanan => $pesananDetails)
+                  <div class="col">
+                    <div class="card bg-light-subtle mt-4">
+                      <div class="card-body">
+                        <div class="text-section mb-0 lh-1">
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <p class="card-text fs-6">
+                          @foreach ($pesananDetails as $detail)
+                            {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                          @endforeach
+                          </p>
+                          <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
+                          <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
+                          <p class="card-text text-end fs-6 fw-semibold">
+                            {{ $pesananDetails->first()->tenant->nama_tenant }}
+                          </p>
+                        </div>
+                        <div class="d-grid mt-3 text-canter">
+                          <button class="btn btn-danger btn-block fw-medium" id="buttonKonfirmasiPembayaran" data-bs-toggle="modal" data-bs-target="#modalKonfirmasiPembayaranTenant">Konfirmasi Pembayaran</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+              @endif
             </div>
           </div>
 
           <!--Nav Tab Pesanan Diproses-->
           <div id="tabPesananDiproses" class="tab-pane ">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananDiproses as $idPesanan => $pesananDetails )
+              @foreach ($groupedPesananDiproses as $idPesananKasir => $pesananDetails )
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                           <p class="card-text fs-6 ">
                             @foreach ($pesananDetails as $detail)
-                              {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                              {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                             @endforeach
                           </p>
                           <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                           <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
                           <p class="card-text text-end fs-6 fw-semibold">
-                            {{ $pesananDetails->first()->kasir->nama_kasir }}
                           </p>
                       </div>
                       <div class="d-grid gap-2  mt-3 ">
@@ -169,25 +188,25 @@
                 </div>
               @endforeach
             </div>
-          </div>
+          </div> 
 
           <!--Nav Tab Pesanan Selesai-->
           <div id="tabPesananSelesai" class="tab-pane ">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananSelesai as $idPesanan => $pesananDetails)
+              @foreach ($groupedPesananSelesai as $idPesananKasir => $pesananDetails)
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                           <p class="card-text fs-6 ">
                             @foreach ($pesananDetails as $detail)
-                              {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                              {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                             @endforeach
                           </p>
                           <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                           <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
-                          <p class="card-text text-end fs-6 fw-semibold">{{ $pesananDetails->first()-kasir->nama_kasir }}</p>
+                          <p class="card-text text-end fs-6 fw-semibold"></p>
                       </div>
                       <div class="d-grid gap-2  mt-3 ">
                           <button class="btn btn-danger fw-medium" id="buttonPesananSelesai" disabled >Pesanan Selesai</button>
@@ -199,7 +218,7 @@
             </div>
           </div>
 
-        </div>
+        </div> 
 
         <!--Modal Pesanan Ditolak-->
         <div class="modal" id="modalTolakPesanan">
@@ -241,8 +260,8 @@
           </div>
         </div>
 
-        <!--Modal Konfirmasi Pembayaran-->
-        <div class="modal" id="modalKonfirmasiPembayaran">
+        <!--Modal Konfirmasi Pembayaran Kasir-->
+        <div class="modal" id="modalKonfirmasiPembayaranKasir">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
         
@@ -253,18 +272,42 @@
         
               <!-- Modal footer -->
               @if ($groupedPesananMenunggu->isNotEmpty())
-                <form action="{{ route('pesananKasir.konfirmasiPembayaran', ['id' => $groupedPesananMenunggu->first()->first()->idPesanan]) }}" method="POST">
+                <form action="{{ route('pesananKasir.konfirmasiPembayaranKasir', ['id' => $groupedPesananMenunggu->first()->first()->idPesananKasir]) }}" method="POST">
               @endif
                 @csrf
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batalkan</button>
                   <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal">Ya</button>
                 </div>
-                @if ($groupedPesananMenunggu->isNotEmpty())
-              </form>
-                @endif
+              @if ($groupedPesananMenunggu->isNotEmpty())
+                </form>
+              @endif
+            </div>
+          </div>
+        </div>
 
+        <!--Modal Konfirmasi Pembayaran Tenant-->
+        <div class="modal" id="modalKonfirmasiPembayaranTenant">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
         
+              <!-- Modal body -->
+              <div class="modal-body">
+                <p class="fs-5 text-danger fw-semibold">Konfirmasi Pembayaran ?</p>
+              </div>
+        
+              <!-- Modal footer -->
+              @if ($groupedPesananTenantMenunggu->isNotEmpty())
+                <form action="{{ route('pesananTenant.konfirmasiPembayaranTenant', ['id' => $groupedPesananTenantMenunggu->first()->first()->idPesanan]) }}" method="POST">
+              @endif
+                @csrf
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batalkan</button>
+                  <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal">Ya</button>
+                </div>
+              @if ($groupedPesananTenantMenunggu->isNotEmpty())
+                </form>
+              @endif
             </div>
           </div>
         </div>
@@ -281,7 +324,7 @@
         
               <!-- Modal footer -->
               @if ($groupedPesananDiproses->isNotEmpty())
-                <form action="{{ route('pesananKasir.pesananSelesai', ['id' => $groupedPesananDiproses->first()->first()->idPesanan]) }}" method="POST">
+                <form action="{{ route('pesananKasir.pesananSelesaiKasir', ['id' => $groupedPesananDiproses->first()->first()->idPesananKasir]) }}" method="POST">
               @endif
                 @csrf
                 <div class="modal-footer">
@@ -359,7 +402,7 @@
             success: function (data) {
                 // Iterate over the menu options and append them to the dropdown
                 $.each(data, function (index, option) {
-                    dropdown.append("<option value='" + option.id + "'>" + option.namaProduk + "</option>");
+                    dropdown.append("<option value='" + option.id + "'>" + option.nama_produk + "</option>");
                 });
             },
             error: function (error) {
