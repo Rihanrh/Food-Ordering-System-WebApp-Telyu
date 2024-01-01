@@ -138,21 +138,20 @@
           <!--Nav Tab Pesanan Diproses-->
           <div id="tabPesananDiproses" class="tab-pane ">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananDiproses as $idPesanan => $pesananDetails )
+              @foreach ($groupedPesananDiproses as $idPesananKasir => $pesananDetails )
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                           <p class="card-text fs-6 ">
                             @foreach ($pesananDetails as $detail)
-                              {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                              {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                             @endforeach
                           </p>
                           <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                           <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
                           <p class="card-text text-end fs-6 fw-semibold">
-                            {{ $pesananDetails->first()->kasir->nama_kasir }}
                           </p>
                       </div>
                       <div class="d-grid gap-2  mt-3 ">
@@ -168,20 +167,20 @@
           <!--Nav Tab Pesanan Selesai-->
           <div id="tabPesananSelesai" class="tab-pane ">
             <div class="row row-cols-1 row-cols-md-3 g-6 ms-0">
-              @foreach ($groupedPesananSelesai as $idPesanan => $pesananDetails)
+              @foreach ($groupedPesananSelesai as $idPesananKasir => $pesananDetails)
                 <div class="col">
                   <div class="card bg-light-subtle mt-4">
                     <div class="card-body">
                       <div class="text-section mb-0 lh-1">
-                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesanan }}</h5>
+                          <h5 class="card-title fs-5 fw-semibold">ID Pesanan : {{ $idPesananKasir }}</h5>
                           <p class="card-text fs-6 ">
                             @foreach ($pesananDetails as $detail)
-                              {{ $detail->quantity }}x {{ $detail->menu->namaProduk }} - 
+                              {{ $detail->quantity }}x {{ $detail->menu->nama_produk }} - 
                             @endforeach
                           </p>
                           <p class="card-text fs-6 text-danger fw-semibold" >Rp{{ $pesananDetails->sum('totalHarga') }}</p>
                           <p class="card-text fs-6 fw-semibold" >{{ $pesananDetails->first()->metodePembayaran }}</p>
-                          <p class="card-text text-end fs-6 fw-semibold">{{ $pesananDetails->first()-kasir->nama_kasir }}</p>
+                          <p class="card-text text-end fs-6 fw-semibold"></p>
                       </div>
                       <div class="d-grid gap-2  mt-3 ">
                           <button class="btn btn-danger fw-medium" id="buttonPesananSelesai" disabled >Pesanan Selesai</button>
@@ -247,7 +246,7 @@
         
               <!-- Modal footer -->
               @if ($groupedPesananMenunggu->isNotEmpty())
-                <form action="{{ route('pesananKasir.konfirmasiPembayaranKasir', ['id' => $groupedPesananMenunggu->first()->first()->idPesanan]) }}" method="POST">
+                <form action="{{ route('pesananKasir.konfirmasiPembayaranKasir', ['id' => $groupedPesananMenunggu->first()->first()->idPesananKasir]) }}" method="POST">
               @endif
                 @csrf
                 <div class="modal-footer">
@@ -275,7 +274,7 @@
         
               <!-- Modal footer -->
               @if ($groupedPesananDiproses->isNotEmpty())
-                <form action="{{ route('pesananKasir.pesananSelesai', ['id' => $groupedPesananDiproses->first()->first()->idPesanan]) }}" method="POST">
+                <form action="{{ route('pesananKasir.pesananSelesaiKasir', ['id' => $groupedPesananDiproses->first()->first()->idPesananKasir]) }}" method="POST">
               @endif
                 @csrf
                 <div class="modal-footer">

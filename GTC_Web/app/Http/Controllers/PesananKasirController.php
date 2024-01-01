@@ -82,7 +82,7 @@ class PesananKasirController extends Controller
                     'idMenu' => $menu->id,
                     'idPesananKasir' => $id,
                     'quantity' => $quantity[$menu->id],
-                    'totalHarga' => $quantity[$menu->id] * $menu->hargaProduk,
+                    'totalHarga' => $quantity[$menu->id] * $menu->harga_produk,
                     'metodePembayaran' => $request->metode,
                     'statusPesanan' => 'Menunggu Konfirmasi Pembayaran',
                 ]);
