@@ -42,7 +42,7 @@
                     class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"></a>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="/pesananKasir" class="nav-link ">
+                        <a href="/pesananTenant" class="nav-link ">
                             <i class="bi bi-receipt" style="font-size: 2rem;"></i>
                             <svg class="bi me-2" width="16" height="16">
                                 <use xlink:href="#bi bi-receipt" />
@@ -52,8 +52,8 @@
                     </li>
 
                     <li>
-                        <a href="/menuKasir" class="nav-link text-white">
-                            <i class="bi bi-cup-straw" style="font-size: 2rem;"></i>
+                        <a href="/menuTenant" class="nav-link text-white">
+                            <i class="bi bi-egg-fried" style="font-size: 2rem;"></i>
                             <svg class="bi me-2" width="16" height="16">
                                 <use xlink:href="#speedometer2" />
                             </svg>
@@ -62,7 +62,7 @@
                     </li>
 
                     <li>
-                        <a href="/reportKasir" class="nav-link text-white">
+                        <a href="/reportTenant" class="nav-link text-white">
                             <i class="bi bi-journal-text" style="font-size: 2rem;"></i>
                             <svg class="bi me-2" width="16" height="16">
                                 <use xlink:href="#table" />
@@ -70,7 +70,6 @@
                             Laporan
                         </a>
                     </li>
-
                 </ul>
                 <hr>
 
@@ -78,11 +77,11 @@
                 <div class="dropdown">
                     <a href="#Syalala" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <strong>{{ auth()->guard('kasir')->user()->nama_kasir }}</strong>
+                        <strong>{{ auth()->guard('tenant')->user()->nama_tenant }}</strong>
                     </a>
                     <ul class="dropdown-menu  text-small shadow" aria-labelledby="dropdownUser1">
                         <li>
-                            <form action="{{ route('kasir.keluar') }}" method="POST">
+                            <form action="{{ route('tenant.keluar') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item" href="landpg.html">Keluar</button>
                             </form>
@@ -115,7 +114,8 @@
                     <table id="reportDataTable" class="table  mt-4 table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
-                                <td class="table-danger">ID Pesanan Kasir</td>
+                                <td class="table-danger">ID Tenant</td>
+                                <td class="table-danger">ID Pesanan Tenant</td>
                                 <td class="table-danger">Total Harga</td>
                                 <td class="table-danger">Metode Pembayaran</td>
                                 <td class="table-danger">Waktu Penjualan</td>
@@ -127,11 +127,11 @@
         </div>
     </main>
 
-    <script src="menu.js"></script>
+    {{-- <script src="menu.js"></script>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    <script src="sidebars.js"></script>
+    <script src="sidebars.js"></script> --}}
 
     <script>
         $(function() {
@@ -140,7 +140,7 @@
                 serverSide: true,
                 searching: false,
                 ajax: {
-                    url: "{{ route('reportKasir.index') }}",
+                    url: "{{ route('reportTenant.index') }}",
                     data: function(data) {
                         data.startDate = $('#daterange').data('daterangepicker') ?
                             $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD') :
@@ -148,11 +148,17 @@
                         data.endDate = $('#daterange').data('daterangepicker') ?
                             $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD') :
                             null;
+                        data.idTenant =
+                        "{{ auth()->guard('tenant')->id() }}"; // Get the logged-in Tenant's ID
                     }
                 },
                 columns: [{
-                        data: 'idPesananKasir',
-                        name: 'idPesananKasir'
+                        data: 'idTenant',
+                        name: 'idTenant'
+                    },
+                    {
+                        data: 'idPesanan',
+                        name: 'idPesanan'
                     },
                     {
                         data: 'totalHarga',
@@ -195,6 +201,7 @@
             });
         });
     </script>
+
 
 </body>
 

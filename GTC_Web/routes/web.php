@@ -49,6 +49,7 @@ Route::resource('/menuKasir', MenuKasirController::class);
 Route::resource('/pesananKasir', PesananKasirController::class);
 Route::resource('/pesananTenant', PesananTenantController::class);
 Route::resource('/reportKasir', ReportKasirController::class);
+Route::resource('/reportTenant', ReportTenantController::class);
 // Route::resource('/reportKasir', ReportKasirController::class)->only(['index', 'getData']);
 
 // Route for Pesanan Tenant

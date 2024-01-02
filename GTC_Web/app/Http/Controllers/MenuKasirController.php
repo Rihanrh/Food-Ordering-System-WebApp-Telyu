@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\MenuKasir;
 use Illuminate\Support\Facades\File;
 
+
 class MenuKasirController extends Controller
 {
     /**

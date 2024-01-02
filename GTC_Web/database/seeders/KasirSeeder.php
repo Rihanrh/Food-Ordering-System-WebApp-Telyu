@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\AkunKasir;
 
+
+
 class KasirSeeder extends Seeder
 {
     /**
