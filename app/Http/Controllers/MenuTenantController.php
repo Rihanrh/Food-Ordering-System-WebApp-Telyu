@@ -3,32 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\MenuTenant;
+use App\Models\AkunTenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class MenuTenantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function getMenuByTenant(string $tenantName)
+    {
+        // Find tenant by name from akun_tenants table
+        $tenant = AkunTenant::where('nama_tenant', $tenantName)->first();
+
+        if (!$tenant) {
+            return response()->json(['message' => 'Tenant not found'], 404);
+        }
+
+        // Fetch menus associated with the found tenant using eager loading
+        $menus = $tenant->menuTenants()->get(); // Assuming the relation is named 'menuTenants'
+
+        if ($menus->isEmpty()) {
+            return response()->json(['message' => 'No menus found for this tenant'], 404);
+        }
+
+        return response()->json($menus);
+    }
+
     public function index()
     {
         $menus = MenuTenant::where('idTenant', auth()->guard('tenant')->id())->get();
         return view("tenantMenu", ['menus'=>$menus]);
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -43,16 +53,12 @@ class MenuTenantController extends Controller
         $menu->idTenant = auth()->guard('tenant')->id();
 
         $request->tambahFotoProduk->move(public_path('file'), $menu->fotoProduk);
-        // $request->tambahFotoProduk->getClientOriginalName()
 
         $menu->save();
         return redirect('/menuTenant')->with('success','Menu Telah Ditambahkan');
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(MenuTenant $menu, string $id)
     {
         $menu = MenuTenant::where('id', $id)->first();
@@ -68,17 +74,11 @@ class MenuTenantController extends Controller
         return response()->json(['error'=> 'Data Not Found'] ,404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(MenuTenant $menu)
     {
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $menus = MenuTenant::where('id', $id)->first();
@@ -104,9 +104,6 @@ class MenuTenantController extends Controller
         return redirect('/menuTenant')->with('success','Menu Telah Disunting');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $menus = MenuTenant::where('id', $id)->first();

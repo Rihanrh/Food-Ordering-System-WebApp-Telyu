@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::get('/getTenantNameById/{id}', [App\Http\Controllers\AkunTenantController::class, 'getTenantNameById']);
+Route::get('/tenants', [App\Http\Controllers\AkunTenantController::class, 'getAllTenants']);
+Route::get('/getMenuByTenant/{tenantName}', [App\Http\Controllers\MenuTenantController::class, 'getMenuByTenant']);

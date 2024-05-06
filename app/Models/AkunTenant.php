@@ -16,6 +16,11 @@ class AkunTenant extends Authenticatable
         'nama_tenant', 'username_tenant', 'password_tenant',
     ];
 
+    public function menuTenants()
+    {
+        return $this->hasMany(MenuTenant::class, 'idTenant', 'id'); // Replace with actual column names
+    }
+
     public function getAuthIdentifier()
     {
         return $this->getKey();
