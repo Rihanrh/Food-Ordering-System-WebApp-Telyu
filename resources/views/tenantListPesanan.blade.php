@@ -140,16 +140,16 @@
                             Menu
                         </a>
                     </li>
-                    
+
                     <li>
-                      <a href="/reportTenant" class="nav-link text-white">
-                          <i class="bi bi-journal-text" style="font-size: 2rem;"></i>
-                          <svg class="bi me-2" width="16" height="16">
-                              <use xlink:href="#table" />
-                          </svg>
-                          Laporan
-                      </a>
-                  </li>
+                        <a href="/reportTenant" class="nav-link text-white">
+                            <i class="bi bi-journal-text" style="font-size: 2rem;"></i>
+                            <svg class="bi me-2" width="16" height="16">
+                                <use xlink:href="#table" />
+                            </svg>
+                            Laporan
+                        </a>
+                    </li>
                 </ul>
                 <hr>
 
@@ -465,7 +465,7 @@
                 // Buat dua dropdown
                 var dropdown = $(
                     "<select class='form-select mt-3 'name='menu[]' placeholder='Native Select'data-search='false'data-silent-initial-value-set='true' id='id'></select>"
-                    );
+                );
 
                 // Isi dropdown pertama dengan data multi select
                 $.ajax({

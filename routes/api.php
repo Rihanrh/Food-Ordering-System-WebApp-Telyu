@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::get('/getTenantNameById/{id}', [App\Http\Controllers\AkunTenantController::class, 'getTenantNameById']);
 Route::get('/tenants', [App\Http\Controllers\AkunTenantController::class, 'getAllTenants']);
 Route::get('/getMenuByTenant/{tenantName}', [App\Http\Controllers\MenuTenantController::class, 'getMenuByTenant']);
+Route::get('/pembelis/{deviceId}', [App\Http\Controllers\AkunPembeliController::class, 'getPembeli']);
+Route::post('/pembelis', [App\Http\Controllers\AkunPembeliController::class, 'createPembeli']);

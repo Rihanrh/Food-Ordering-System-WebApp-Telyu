@@ -14,9 +14,9 @@ class TenantSeeder extends Seeder
     public function run(): void
     {
         AkunTenant::create([
-            'nama_tenant' => 'test',
-            'username_tenant' => 'test',
-            'password_tenant' => bcrypt('test1'),
+            'nama_tenant' => 'Dina',
+            'username_tenant' => 'dina_tenant',
+            'password_tenant' => bcrypt('test'),
         ]);
         AkunTenant::create([
             'nama_tenant' => 'Lia',
@@ -26,6 +26,11 @@ class TenantSeeder extends Seeder
         AkunTenant::create([
             'nama_tenant' => 'Fariz',
             'username_tenant' => 'fariz_tenant',
+            'password_tenant' => bcrypt('test'),
+        ]);
+        AkunTenant::create([
+            'nama_tenant' => 'Liyan',
+            'username_tenant' => 'liyan_tenant',
             'password_tenant' => bcrypt('test'),
         ]);
     }

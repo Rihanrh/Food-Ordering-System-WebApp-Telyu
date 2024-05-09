@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('pesanan_tenants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idTenant')->constrained('akun_tenants','id')->onDelete('cascade');
-            $table->foreignId('idMenu')->constrained('menu_tenants','id')->onDelete('cascade');
+            $table->foreignId('idTenant')->constrained('akun_tenants', 'id')->onDelete('cascade');
+            $table->foreignId('idMenu')->constrained('menu_tenants', 'id')->onDelete('cascade');
             $table->bigInteger('idPesanan');
             $table->integer('quantity');
             $table->integer('totalHarga');
             $table->string('metodePembayaran');
             $table->string('statusPesanan');
+            $table->integer('nomorMeja');
+            $table->unsignedInteger('queue')->nullable();
+            $table->foreignId('idPembeli')->nullable()->constrained('akun_pembelis', 'id')->nullOnDelete();
             $table->timestamps();
         });
     }
