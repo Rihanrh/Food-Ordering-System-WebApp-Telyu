@@ -83,6 +83,7 @@ class PesananTenantController extends Controller
                     'quantity' => $quantity[$menu->id],
                     'totalHarga' => $quantity[$menu->id] * $menu->hargaProduk,
                     'metodePembayaran' => $request->metode,
+                    'nomorMeja' => $request->nomorMeja,
                     'statusPesanan' => 'Menunggu Konfirmasi Pembayaran',
                 ]);
             }

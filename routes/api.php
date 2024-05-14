@@ -20,5 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/tenants', [App\Http\Controllers\AkunTenantController::class, 'getAllTenants']);
 Route::get('/getMenuByTenant/{tenantName}', [App\Http\Controllers\MenuTenantController::class, 'getMenuByTenant']);
+
 Route::get('/pembelis/{deviceId}', [App\Http\Controllers\AkunPembeliController::class, 'getPembeli']);
 Route::post('/pembelis', [App\Http\Controllers\AkunPembeliController::class, 'createPembeli']);
+
+Route::get('/checkout-items/{idPembeli}', [App\Http\Controllers\AkunPembeliController::class, 'getCheckoutItems']);
+Route::post('/checkout-items', [CheckoutTenantController::class, 'storeCheckoutItem']);

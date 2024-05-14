@@ -423,6 +423,14 @@
                                     <option value="QRIS">QRIS</option>
                                     <option value="Tunai">Tunai</option>
                                 </select>
+                                <p class="text-danger fs-5 mt-3 ms-2">Nomor Meja :</p>
+                                <select class='form-select' name='nomorMeja' placeholder='Native Select' data-search='false' data-silent-initial-value-set='true'>
+                                    <?php
+                                    for ($i = 1; $i <= 25; $i++) {
+                                        echo "<option value='$i'>$i</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
