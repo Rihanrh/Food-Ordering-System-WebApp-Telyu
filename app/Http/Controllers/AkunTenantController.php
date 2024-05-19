@@ -28,6 +28,17 @@
             return response()->json($tenants);
         }
 
+        public function getTenant($idTenant)
+        {
+            $tenant = AkunTenant::find($idTenant);
+
+            if (!$tenant) {
+                return response()->json(['message' => 'Tenant not found'], 404);
+            }
+
+            return response()->json($tenant);
+        }
+
         public function index()
         {
             //

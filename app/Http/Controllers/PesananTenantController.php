@@ -43,8 +43,30 @@ class PesananTenantController extends Controller
         $groupedPesananSelesai = $pesanan_selesai->groupBy('idPesanan');
 
         return view('tenantListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai'));
-}
+    }
 
+    public function postPesanan(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'idTenant' => 'required|exists:akun_tenants,id',
+            'idMenu' => 'required|exists:menu_tenants,id',
+            'idPesanan' => 'required|integer',
+            'quantity' => 'required|integer',
+            'totalHarga' => 'required|integer',
+            'metodePembayaran' => 'required|string',
+            'statusPesanan' => 'required|string',
+            'nomorMeja' => 'required|integer',
+            'queue' => 'nullable|integer',
+            'idPembeli' => 'nullable|exists:akun_pembelis,id',
+        ]);
+
+        // Create a new PesananTenant record
+        $pesananTenant = PesananTenant::create($validatedData);
+
+        // Return the newly created record as a JSON response
+        return response()->json($pesananTenant, 201);
+    }
 
     /**
      * Show the form for creating a new resource.

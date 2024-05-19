@@ -20,4 +20,17 @@ class PesananTenant extends Model
     public function menu(){
         return $this->belongsTo(MenuTenant::class,'idMenu','id');
     }
+
+    protected $fillable = [
+        'idTenant',
+        'idMenu',
+        'idPesanan',
+        'quantity',
+        'totalHarga',
+        'metodePembayaran',
+        'statusPesanan',
+        'nomorMeja',
+        'queue',
+        'idPembeli',
+    ];
 }

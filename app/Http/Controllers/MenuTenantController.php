@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\File;
 
 class MenuTenantController extends Controller
 {
-    public function getMenuByTenant(string $tenantName)
+    public function getMenuByTenant(int $tenantId)
     {
-        // Find tenant by name from akun_tenants table
-        $tenant = AkunTenant::where('nama_tenant', $tenantName)->first();
+        // Find tenant by ID from akun_tenants table
+        $tenant = AkunTenant::find($tenantId);
 
         if (!$tenant) {
             return response()->json(['message' => 'Tenant not found'], 404);
@@ -26,6 +26,20 @@ class MenuTenantController extends Controller
         }
 
         return response()->json($menus);
+    }
+
+    public function getMenuById(int $idTenant, int $id)
+    {
+        // Find menu by tenant ID and menu ID
+        $menu = MenuTenant::where('idTenant', $idTenant)
+                    ->where('id', $id)
+                    ->first();
+
+        if (!$menu) {
+            return response()->json(['message' => 'Menu not found'], 404);
+        }
+
+        return response()->json($menu);
     }
 
     public function index()
