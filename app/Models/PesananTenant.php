@@ -30,6 +30,7 @@ class PesananTenant extends Model
         'metodePembayaran',
         'statusPesanan',
         'nomorMeja',
+        'opsiKonsumsi',
         'queue',
         'idPembeli',
     ];

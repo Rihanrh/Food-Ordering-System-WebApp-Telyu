@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('metodePembayaran');
             $table->string('statusPesanan');
             $table->integer('nomorMeja');
+            $table->string('opsiKonsumsi');
             $table->unsignedInteger('queue')->nullable();
             $table->foreignId('idPembeli')->nullable()->constrained('akun_pembelis', 'id')->nullOnDelete();
             $table->timestamps();

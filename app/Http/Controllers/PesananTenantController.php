@@ -45,6 +45,15 @@ class PesananTenantController extends Controller
         return view('tenantListPesanan', compact('groupedPesananMenunggu', 'groupedPesananDiproses', 'groupedPesananSelesai'));
     }
 
+    public function getMaxIdPesanan()
+    {
+        $maxIdPesanan = PesananTenant::max('idPesanan');
+
+        return response()->json([
+            'idPesanan' => $maxIdPesanan,
+        ]);
+    }
+
     public function postPesanan(Request $request)
     {
         // Validate the request data
@@ -57,6 +66,7 @@ class PesananTenantController extends Controller
             'metodePembayaran' => 'required|string',
             'statusPesanan' => 'required|string',
             'nomorMeja' => 'required|integer',
+            'opsiKonsumsi' => 'required|string',
             'queue' => 'nullable|integer',
             'idPembeli' => 'nullable|exists:akun_pembelis,id',
         ]);
@@ -82,22 +92,22 @@ class PesananTenantController extends Controller
     public function store(Request $request)
     {
         $id = optional(PesananTenant::orderBy('idPesanan', 'desc')->first())->idPesanan + 1 ?? 1;
-
+    
         $quantity = array();
         $menus = $request->menu;
-
-        foreach($menus as $menu){
-            if(array_key_exists($menu, $quantity)){
+    
+        foreach ($menus as $menu) {
+            if (array_key_exists($menu, $quantity)) {
                 $quantity[$menu] += 1;
-            }else{
+            } else {
                 $quantity[$menu] = 1;
             }
         }
-
-        foreach($menus as $menu){
-            $menu = MenuTenant::where('id', $menu)->first();
+    
+        foreach ($menus as $menuId) {
+            $menu = MenuTenant::where('id', $menuId)->first();
             $temp_menu = PesananTenant::where('idMenu', $menu->id)->where('idPesanan', $id)->first();
-            if(!$temp_menu){
+            if (!$temp_menu) {
                 PesananTenant::create([
                     'idTenant' => auth()->guard('tenant')->id(),
                     'idMenu' => $menu->id,
@@ -106,13 +116,15 @@ class PesananTenantController extends Controller
                     'totalHarga' => $quantity[$menu->id] * $menu->hargaProduk,
                     'metodePembayaran' => $request->metode,
                     'nomorMeja' => $request->nomorMeja,
+                    'opsiKonsumsi' => $request->opsiKonsumsi,
                     'statusPesanan' => 'Menunggu Konfirmasi Pembayaran',
                 ]);
             }
         }
-
+    
         return redirect('/pesananTenant')->with('success', 'Pesanan berhasil ditambahkan');
     }
+    
 
     /**
      * Display the specified resource.
@@ -154,21 +166,34 @@ class PesananTenantController extends Controller
 
     public function konfirmasiPembayaran(string $id)
     {
+        // Fetch all orders with the given idPesanan
         $pesanan = PesananTenant::where('idPesanan', $id)->get();
-        foreach($pesanan as $p){
+    
+        // Get the current maximum queue value
+        $maxQueue = PesananTenant::max('queue') ?? 0;
+    
+        foreach ($pesanan as $p) {
+            // Increment the max queue value for each order and set the new queue value
+            $p->queue = ++$maxQueue;
             $p->statusPesanan = 'Pesanan Dalam Proses';
             $p->save();
         }
+    
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 
     public function pesananSelesai(string $id)
     {
+        // Fetch all orders with the given idPesanan
         $pesanan = PesananTenant::where('idPesanan', $id)->get();
-        foreach($pesanan as $p){
+
+        foreach ($pesanan as $p) {
+            // Decrement the queue value for each order
+            $p->queue = $p->queue > 0 ? $p->queue - 1 : 0; // Ensure queue doesn't go negative
             $p->statusPesanan = 'Pesanan Selesai';
             $p->save();
         }
+
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 }

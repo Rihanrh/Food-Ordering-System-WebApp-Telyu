@@ -27,6 +27,7 @@ Route::get('/pembelis/{deviceId}', [App\Http\Controllers\AkunPembeliController::
 Route::post('/pembelis', [App\Http\Controllers\AkunPembeliController::class, 'createPembeli']);
 
 Route::get('/checkout-items/{idPembeli}', [App\Http\Controllers\AkunPembeliController::class, 'getCheckoutItems']);
-Route::post('/checkout-items', [CheckoutTenantController::class, 'storeCheckoutItem']);
+Route::post('/checkout-items', [App\Http\Controllers\CheckoutTenantController::class, 'storeCheckoutItem']);
 
-Route::post('/pesanan', [PesananTenantController::class, 'postPesanan']);
+Route::post('/pesanan', [App\Http\Controllers\PesananTenantController::class, 'postPesanan']);
+Route::get('/pesanan/max-id-pesanan', [App\Http\Controllers\PesananTenantController::class, 'getMaxIdPesanan']);

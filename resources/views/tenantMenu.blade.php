@@ -218,8 +218,8 @@
                 <tbody>
                     @foreach ($menus as $menu)
                         <tr>
-
-                            <td><img src="file/{{ $menu->fotoProduk }}" alt=""width="10%"> </td>
+                            
+                            <td><img src="{{ asset('file/' . $menu->fotoProduk) }}" alt="" width="10%"> </td>
                             <td>{{ $menu->namaProduk }}</td>
                             <td>{{ $menu->hargaProduk }}</td>
                             <td>

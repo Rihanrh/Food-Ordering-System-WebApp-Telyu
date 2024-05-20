@@ -412,14 +412,10 @@
                                 <h3 class="text-danger">Tambah Pesanan</h3>
                             </div>
                             <div class="modal-body">
-                                <button id="tambah-menu" type="button" class="btn btn-danger">Tambahkan
-                                    Menu</button>
-                                <div id="dropdown">
-                                </div>
+                                <button id="tambah-menu" type="button" class="btn btn-danger">Tambahkan Menu</button>
+                                <div id="dropdown"></div>
                                 <p class="text-danger fs-5 mt-3 ms-2">Metode Pembayaran : </p>
-                                <select class='form-select' name='metode'
-                                    placeholder='Native Select'data-search='false'
-                                    data-silent-initial-value-set='true'>
+                                <select class='form-select' name='metode' placeholder='Native Select' data-search='false' data-silent-initial-value-set='true'>
                                     <option value="QRIS">QRIS</option>
                                     <option value="Tunai">Tunai</option>
                                 </select>
@@ -430,6 +426,11 @@
                                         echo "<option value='$i'>$i</option>";
                                     }
                                     ?>
+                                </select>
+                                <p class="text-danger fs-5 mt-3 ms-2">Opsi Konsumsi :</p>
+                                <select class='form-select' name='opsiKonsumsi' placeholder='Native Select' data-search='false' data-silent-initial-value-set='true'>
+                                    <option value="Dibungkus">Dibungkus</option>
+                                    <option value="Makan di Tempat">Makan di Tempat</option>
                                 </select>
                             </div>
                             <div class="modal-footer">
