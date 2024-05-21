@@ -54,6 +54,20 @@ class PesananTenantController extends Controller
         ]);
     }
 
+    public function getPesananByIdPembeli($idPembeli)
+    {
+        // Retrieve pesanan by idPembeli
+        $pesanan = PesananTenant::where('idPembeli', $idPembeli)->get();
+
+        // Check if pesanan exists
+        if ($pesanan->isEmpty()) {
+            return response()->json(['message' => 'Pesanan not found'], 404);
+        }
+
+        // Return pesanan as JSON response
+        return response()->json($pesanan, 200);
+    }
+
     public function postPesanan(Request $request)
     {
         // Validate the request data
