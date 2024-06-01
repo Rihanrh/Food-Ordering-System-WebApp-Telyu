@@ -48,12 +48,12 @@ class MenuTenantSeeder extends Seeder
             'idTenant' => 2, 
         ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Nasi Goreng',
-            'hargaProduk' => '16000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Lia/Nasi Goreng.jpg',
-            'idTenant' => 2, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Nasi Goreng',
+        //     'hargaProduk' => '16000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Lia/Nasi Goreng.jpg',
+        //     'idTenant' => 2, 
+        // ]);
 
         // MenuTenant::create([
         //     'namaProduk' => 'Soto Ayam',
@@ -83,12 +83,12 @@ class MenuTenantSeeder extends Seeder
             'idTenant' => 3, 
         ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Nasi',
-            'hargaProduk' => '4000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Nasi.jpg',
-            'idTenant' => 3, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Nasi',
+        //     'hargaProduk' => '4000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Nasi.jpg',
+        //     'idTenant' => 3, 
+        // ]);
 
         // MenuTenant::create([
         //     'namaProduk' => 'Rendang',
