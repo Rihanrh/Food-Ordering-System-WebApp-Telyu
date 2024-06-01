@@ -181,22 +181,18 @@ class PesananTenantController extends Controller
     public function konfirmasiPembayaran(string $id)
     {
         // Fetch all orders with the given idPesanan
-        $pesananList = PesananTenant::where('idPesanan', $id)->get();
-    
-        // Group the orders by their current queue value
-        $pesananByQueue = $pesananList->groupBy('queue');
+        $pesanan = PesananTenant::where('idPesanan', $id)->get();
     
         // Get the current maximum queue value
         $maxQueue = PesananTenant::max('queue') ?? 0;
     
-        // Process each queue group
-        foreach ($pesananByQueue as $queue => $pesananGroup) {
-            // Increment the queue value for all orders in this group
-            foreach ($pesananGroup as $pesanan) {
-                $pesanan->queue = ++$maxQueue;
-                $pesanan->statusPesanan = 'Pesanan Dalam Proses';
-                $pesanan->save();
-            }
+        // Increment the max queue value
+        $newQueue = $maxQueue + 1;
+    
+        foreach ($pesanan as $p) {
+            $p->queue = $newQueue;
+            $p->statusPesanan = 'Pesanan Dalam Proses';
+            $p->save();
         }
     
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
@@ -205,30 +201,17 @@ class PesananTenantController extends Controller
     public function pesananSelesai(string $id)
     {
         // Fetch all orders with the given idPesanan
-        $pesananList = PesananTenant::where('idPesanan', $id)->get();
+        $pesanan = PesananTenant::where('idPesanan', $id)->get();
     
-        // Group the orders by queue value
-        $pesananByQueue = $pesananList->groupBy('queue');
+        $queue = $pesanan->first()->queue;
     
-        // Process each queue group
-        foreach ($pesananByQueue as $queue => $pesananGroup) {
-            // Decrement the queue value for all orders in this group
-            foreach ($pesananGroup as $pesanan) {
-                $pesanan->queue = $pesanan->queue > 0 ? $pesanan->queue - 1 : 0; // Ensure queue doesn't go negative
-                $pesanan->statusPesanan = 'Pesanan Selesai';
-                $pesanan->save();
-            }
+        foreach ($pesanan as $p) {
+            $p->statusPesanan = 'Pesanan Selesai';
+            $p->save();
         }
     
-        // Reorder the remaining queue values
-        $remainingPesanan = PesananTenant::where('statusPesanan', 'Pesanan Dalam Proses')
-            ->orderBy('queue')
-            ->get();
-    
-        foreach ($remainingPesanan as $key => $pesanan) {
-            $pesanan->queue = $key + 1;
-            $pesanan->save();
-        }
+        // Decrement the queue value for all orders with a queue value greater than the completed order's queue value
+        PesananTenant::where('queue', '>', $queue)->decrement('queue');
     
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
