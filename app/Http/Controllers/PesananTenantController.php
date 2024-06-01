@@ -198,16 +198,31 @@ class PesananTenantController extends Controller
 
     public function pesananSelesai(string $id)
     {
-        // Fetch all orders with the given idPesanan
-        $pesanan = PesananTenant::where('idPesanan', $id)->get();
-
-        foreach ($pesanan as $p) {
-            // Decrement the queue value for each order
-            $p->queue = $p->queue > 0 ? $p->queue - 1 : 0; // Ensure queue doesn't go negative
-            $p->statusPesanan = 'Pesanan Selesai';
-            $p->save();
+        // Fetch all orders with the given idPesanan and order them by queue
+        $pesanan = PesananTenant::where('idPesanan', $id)
+            ->orderBy('queue')
+            ->get();
+    
+        // Find the index of the first order in the queue
+        $firstIndex = $pesanan->search(function ($item) {
+            return $item->statusPesanan !== 'Pesanan Selesai';
+        });
+    
+        // If there are no orders in the queue, return
+        if ($firstIndex === false) {
+            return back()->with('success', 'Pesanan berhasil dikonfirmasi');
         }
-
+    
+        // Update the queue values for the remaining orders
+        for ($i = $firstIndex + 1; $i < $pesanan->count(); $i++) {
+            $pesanan[$i]->queue = $i - $firstIndex;
+            $pesanan[$i]->save();
+        }
+    
+        // Mark the first order as complete
+        $pesanan[$firstIndex]->statusPesanan = 'Pesanan Selesai';
+        $pesanan[$firstIndex]->save();
+    
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
 }
