@@ -183,8 +183,11 @@ class PesananTenantController extends Controller
         // Fetch all orders with the given idPesanan
         $pesanan = PesananTenant::where('idPesanan', $id)->get();
     
-        // Get the current maximum queue value
-        $maxQueue = PesananTenant::max('queue') ?? 0;
+        // Get the tenant ID from the first pesanan
+        $tenantId = $pesanan->first()->idTenant;
+    
+        // Get the current maximum queue value for the specific tenant
+        $maxQueue = PesananTenant::where('idTenant', $tenantId)->max('queue') ?? 0;
     
         // Increment the max queue value
         $newQueue = $maxQueue + 1;
@@ -197,21 +200,25 @@ class PesananTenantController extends Controller
     
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
-
+    
     public function pesananSelesai(string $id)
     {
         // Fetch all orders with the given idPesanan
         $pesanan = PesananTenant::where('idPesanan', $id)->get();
     
         $queue = $pesanan->first()->queue;
+        $tenantId = $pesanan->first()->idTenant;
     
         foreach ($pesanan as $p) {
             $p->statusPesanan = 'Pesanan Selesai';
+            $p->queue = null; // Set the queue to null for completed pesanan
             $p->save();
         }
     
-        // Decrement the queue value for all orders with a queue value greater than the completed order's queue value
-        PesananTenant::where('queue', '>', $queue)->decrement('queue');
+        // Decrement the queue value for all orders with a queue value greater than the completed order's queue value for the specific tenant
+        PesananTenant::where('idTenant', $tenantId)
+            ->where('queue', '>', $queue)
+            ->decrement('queue');
     
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
     }
