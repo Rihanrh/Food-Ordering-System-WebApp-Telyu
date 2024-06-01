@@ -181,16 +181,22 @@ class PesananTenantController extends Controller
     public function konfirmasiPembayaran(string $id)
     {
         // Fetch all orders with the given idPesanan
-        $pesanan = PesananTenant::where('idPesanan', $id)->get();
+        $pesananList = PesananTenant::where('idPesanan', $id)->get();
+    
+        // Group the orders by their current queue value
+        $pesananByQueue = $pesananList->groupBy('queue');
     
         // Get the current maximum queue value
         $maxQueue = PesananTenant::max('queue') ?? 0;
     
-        foreach ($pesanan as $p) {
-            // Increment the max queue value for each order and set the new queue value
-            $p->queue = ++$maxQueue;
-            $p->statusPesanan = 'Pesanan Dalam Proses';
-            $p->save();
+        // Process each queue group
+        foreach ($pesananByQueue as $queue => $pesananGroup) {
+            // Increment the queue value for all orders in this group
+            foreach ($pesananGroup as $pesanan) {
+                $pesanan->queue = ++$maxQueue;
+                $pesanan->statusPesanan = 'Pesanan Dalam Proses';
+                $pesanan->save();
+            }
         }
     
         return back()->with('success', 'Pesanan berhasil dikonfirmasi');
