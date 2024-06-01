@@ -55,19 +55,19 @@ class MenuTenantSeeder extends Seeder
             'idTenant' => 2, 
         ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Soto Ayam',
-            'hargaProduk' => '12000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Lia/Soto Ayam.jpg',
-            'idTenant' => 2, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Soto Ayam',
+        //     'hargaProduk' => '12000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Lia/Soto Ayam.jpg',
+        //     'idTenant' => 2, 
+        // ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Ayam Gulai',
-            'hargaProduk' => '14000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Ayam Gulai.jpg',
-            'idTenant' => 3, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Ayam Gulai',
+        //     'hargaProduk' => '14000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Ayam Gulai.jpg',
+        //     'idTenant' => 3, 
+        // ]);
 
         MenuTenant::create([
             'namaProduk' => 'Es teh',
@@ -90,12 +90,12 @@ class MenuTenantSeeder extends Seeder
             'idTenant' => 3, 
         ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Rendang',
-            'hargaProduk' => '14000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Rendang.jpg',
-            'idTenant' => 3, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Rendang',
+        //     'hargaProduk' => '14000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Fariz/Rendang.jpg',
+        //     'idTenant' => 3, 
+        // ]);
 
         MenuTenant::create([
             'namaProduk' => 'Batagor',
@@ -111,11 +111,11 @@ class MenuTenantSeeder extends Seeder
             'idTenant' => 4, 
         ]);
 
-        MenuTenant::create([
-            'namaProduk' => 'Nasi Uduk Lengkap',
-            'hargaProduk' => '16000',
-            'fotoProduk' => 'Untuk Diupload/Tenant Liyan/Nasi Uduk Lengkap.jpg',
-            'idTenant' => 4, 
-        ]);
+        // MenuTenant::create([
+        //     'namaProduk' => 'Nasi Uduk Lengkap',
+        //     'hargaProduk' => '16000',
+        //     'fotoProduk' => 'Untuk Diupload/Tenant Liyan/Nasi Uduk Lengkap.jpg',
+        //     'idTenant' => 4, 
+        // ]);
     }
 }
