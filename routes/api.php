@@ -32,3 +32,4 @@ Route::post('/checkout-items', [App\Http\Controllers\CheckoutTenantController::c
 Route::post('/pesanan', [App\Http\Controllers\PesananTenantController::class, 'postPesanan']);
 Route::get('/pesanan/max-id-pesanan', [App\Http\Controllers\PesananTenantController::class, 'getMaxIdPesanan']);
 Route::get('/pesanan/pembeli/{idPembeli}', [App\Http\Controllers\PesananTenantController::class, 'getPesananByIdPembeli']);
+Route::get('/pesanan/{idPesanan}/', [App\Http\Controllers\PesananTenantController::class, 'getPesananByIdPesanan']);
